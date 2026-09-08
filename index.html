@@ -21,7 +21,7 @@ body {
     overflow: hidden;
     font-family: Arial, sans-serif;
     user-select: none;
-    background: #78d1ff;
+    background: #71cfff;
 }
 
 #game {
@@ -33,10 +33,10 @@ body {
     background:
         linear-gradient(
             to bottom,
-            #42b6fa 0%,
-            #70cdfb 45%,
-            #aee7ff 72%,
-            #d7f4ff 100%
+            #43b7fa 0%,
+            #70ceff 45%,
+            #a8e6ff 75%,
+            #d9f5ff 100%
         );
 }
 
@@ -48,16 +48,15 @@ body {
 #sky {
     position: absolute;
     inset: 0;
-
     z-index: 0;
 
     background:
         linear-gradient(
             to bottom,
-            #42b5fa 0%,
-            #70ceff 45%,
-            #a7e5ff 70%,
-            #daf5ff 100%
+            #43b7fa 0%,
+            #69caff 45%,
+            #a5e4ff 75%,
+            #d9f5ff 100%
         );
 }
 
@@ -68,7 +67,12 @@ body {
 
 #airport {
     position: absolute;
-    inset: 0;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
 
     z-index: 3;
 
@@ -84,105 +88,88 @@ body {
     background-repeat:
         no-repeat;
 
+    opacity: 1;
+
     transform:
         translateY(0)
         scale(1);
 
-    opacity: 1;
-
-    transition:
-        transform 4.5s cubic-bezier(.22,.68,.25,1),
-        opacity 4s ease;
-
     /*
-       МЯГКАЯ ВЕРХНЯЯ ГРАНИЦА.
+       Главное изменение:
+       нижняя часть картинки
+       постепенно растворяется.
 
-       Когда картинка начинает уходить вниз,
-       её верх постепенно растворяется
-       в голубом небе.
+       Поэтому при движении вниз
+       мы не увидим жёсткую
+       горизонтальную границу.
     */
 
     -webkit-mask-image:
         linear-gradient(
             to bottom,
-            rgba(0,0,0,.72) 0%,
-            rgba(0,0,0,.92) 5%,
-            rgba(0,0,0,1) 13%,
-            rgba(0,0,0,1) 100%
+
+            #000 0%,
+            #000 62%,
+
+            rgba(0,0,0,1) 68%,
+            rgba(0,0,0,.96) 72%,
+            rgba(0,0,0,.85) 77%,
+            rgba(0,0,0,.68) 82%,
+            rgba(0,0,0,.48) 87%,
+            rgba(0,0,0,.28) 92%,
+            rgba(0,0,0,.10) 97%,
+            transparent 100%
         );
 
     mask-image:
         linear-gradient(
             to bottom,
-            rgba(0,0,0,.72) 0%,
-            rgba(0,0,0,.92) 5%,
-            rgba(0,0,0,1) 13%,
-            rgba(0,0,0,1) 100%
-        );
-}
 
+            #000 0%,
+            #000 62%,
 
-/*
-   Дополнительная голубая дымка.
-   Она делает переход ещё мягче.
-*/
-
-#airportBlend {
-    position: absolute;
-
-    left: 0;
-    top: 0;
-
-    width: 100%;
-    height: 22%;
-
-    z-index: 4;
-
-    pointer-events: none;
-
-    opacity: 0;
-
-    background:
-        linear-gradient(
-            to bottom,
-            rgba(66,181,250,.9) 0%,
-            rgba(82,193,252,.55) 28%,
-            rgba(100,207,255,.18) 65%,
+            rgba(0,0,0,1) 68%,
+            rgba(0,0,0,.96) 72%,
+            rgba(0,0,0,.85) 77%,
+            rgba(0,0,0,.68) 82%,
+            rgba(0,0,0,.48) 87%,
+            rgba(0,0,0,.28) 92%,
+            rgba(0,0,0,.10) 97%,
             transparent 100%
         );
 
     transition:
-        opacity 1.5s ease;
+        transform 5s cubic-bezier(.20,.65,.25,1),
+        opacity 4.6s ease;
 }
 
 
 /*
-   При старте аэродром
-   уходит вниз.
+   При взлёте фон движется вниз.
 */
 
 #game.flying #airport {
+
     transform:
-        translateY(108%)
-        scale(1.08);
+        translateY(110%)
+        scale(1.07);
 
-    opacity: .2;
-}
-
-#game.flying #airportBlend {
-    opacity: 1;
+    opacity: 0;
 }
 
 
 /* =====================================================
-   ЛЁГКОЕ ДВИЖЕНИЕ НЕБА
+   ДВИЖЕНИЕ НЕБА
 ===================================================== */
 
 #skyTexture {
+
     position: absolute;
 
-    inset: -40% 0 0 0;
+    left: 0;
+    top: -40%;
 
+    width: 100%;
     height: 180%;
 
     z-index: 2;
@@ -192,15 +179,16 @@ body {
     opacity: 0;
 
     background:
+
         radial-gradient(
             circle at 15% 20%,
-            rgba(255,255,255,.20) 0 2px,
+            rgba(255,255,255,.18) 0 2px,
             transparent 3px
         ),
 
         radial-gradient(
             circle at 80% 35%,
-            rgba(255,255,255,.16) 0 2px,
+            rgba(255,255,255,.15) 0 2px,
             transparent 3px
         );
 
@@ -217,7 +205,10 @@ body {
     opacity: 1;
 
     animation:
-        skyMove 6s linear infinite;
+        skyMove
+        6s
+        linear
+        infinite;
 }
 
 
@@ -232,7 +223,6 @@ body {
         transform:
             translateY(250px);
     }
-
 }
 
 
@@ -244,27 +234,29 @@ body {
 
     position: absolute;
 
-    /*
-       РАКЕТА ТЕПЕРЬ СТОИТ
-       В БЕЛОМ КРУГЕ НА ПЛОЩАДКЕ
-    */
-
     left: 50%;
 
-    bottom: 13.5%;
+    /*
+       ПОДНЯЛИ РАКЕТУ.
+
+       Теперь она стоит
+       на белой стартовой площадке.
+    */
+
+    bottom: 20.5%;
 
     transform:
         translateX(-50%);
 
     /*
-       РАКЕТА СТАЛА КРУПНЕЕ
+       Чуть крупнее предыдущей.
     */
 
     width:
         clamp(
-            150px,
-            13.5vw,
-            220px
+            155px,
+            14vw,
+            225px
         );
 
     z-index: 30;
@@ -294,7 +286,6 @@ body {
     position: relative;
 
     width: 100%;
-
     height: auto;
 
     z-index: 3;
@@ -314,23 +305,18 @@ body {
     left: 50%;
 
     /*
-       Было 88%.
-       Теперь огонь чуть ближе
-       к двигателю.
+       Подняли пламя
+       ещё совсем немного,
+       чтобы оно выходило
+       прямо из ракеты.
     */
 
-    top: 85.5%;
+    top: 84%;
 
     transform:
         translateX(-50%);
 
-    /*
-       Немного уже,
-       чтобы огонь выходил
-       именно из двигателя.
-    */
-
-    width: 58%;
+    width: 57%;
 
     z-index: 1;
 
@@ -345,7 +331,6 @@ body {
     display: block;
 
     width: 100%;
-
     height: auto;
 }
 
@@ -357,7 +342,7 @@ body {
 
 
 /* =====================================================
-   ЛЁГКАЯ ВИБРАЦИЯ
+   ПОКАЧИВАНИЕ РАКЕТЫ
 ===================================================== */
 
 #game.flying #rocket {
@@ -374,22 +359,17 @@ body {
 @keyframes rocketFloat {
 
     from {
-
-        margin-top:
-            -3px;
+        margin-top: -3px;
     }
 
     to {
-
-        margin-top:
-            3px;
+        margin-top: 3px;
     }
-
 }
 
 
 /* =====================================================
-   НАДПИСЬ
+   СТАРТОВАЯ НАДПИСЬ
 ===================================================== */
 
 #startText {
@@ -397,7 +377,6 @@ body {
     position: absolute;
 
     left: 50%;
-
     top: 7%;
 
     transform:
@@ -412,10 +391,13 @@ body {
         40px;
 
     background:
-        rgba(255,255,255,.88);
+        rgba(255,255,255,.90);
 
     backdrop-filter:
         blur(7px);
+
+    color:
+        #244e6c;
 
     font-size:
         clamp(
@@ -427,20 +409,13 @@ body {
     font-weight:
         800;
 
-    color:
-        #244e6c;
-
     box-shadow:
         0 6px 18px
         rgba(0,0,0,.13);
 
     transition:
-
-        opacity
-        .5s ease,
-
-        transform
-        .5s ease;
+        opacity .5s ease,
+        transform .5s ease;
 }
 
 
@@ -452,8 +427,7 @@ body {
         translateX(-50%)
         translateY(-25px);
 
-    pointer-events:
-        none;
+    pointer-events: none;
 }
 
 
@@ -467,14 +441,10 @@ body {
 
     top: -180px;
 
-    width:
-        220px;
+    width: 220px;
+    height: 130px;
 
-    height:
-        130px;
-
-    z-index:
-        20;
+    z-index: 20;
 
     animation:
         cloudDown
@@ -485,16 +455,13 @@ body {
 
 
 .cloud-wrapper.left {
-
-    left:
-        7%;
+    left: 7%;
 }
 
 
 .cloud-wrapper.center {
 
-    left:
-        50%;
+    left: 50%;
 
     margin-left:
         -110px;
@@ -502,25 +469,18 @@ body {
 
 
 .cloud-wrapper.right {
-
-    right:
-        7%;
+    right: 7%;
 }
 
 
 .cloud {
 
-    position:
-        relative;
+    position: relative;
 
-    width:
-        100%;
+    width: 100%;
+    height: 100%;
 
-    height:
-        100%;
-
-    cursor:
-        pointer;
+    cursor: pointer;
 
     filter:
         drop-shadow(
@@ -532,20 +492,13 @@ body {
 
 .cloud-shape {
 
-    position:
-        absolute;
+    position: absolute;
 
-    left:
-        10px;
+    left: 10px;
+    bottom: 7px;
 
-    bottom:
-        7px;
-
-    width:
-        200px;
-
-    height:
-        70px;
+    width: 200px;
+    height: 70px;
 
     background:
         white;
@@ -559,20 +512,13 @@ body {
 
     content: "";
 
-    position:
-        absolute;
+    position: absolute;
 
-    width:
-        92px;
+    width: 92px;
+    height: 92px;
 
-    height:
-        92px;
-
-    left:
-        30px;
-
-    top:
-        -44px;
+    left: 30px;
+    top: -44px;
 
     border-radius:
         50%;
@@ -586,20 +532,13 @@ body {
 
     content: "";
 
-    position:
-        absolute;
+    position: absolute;
 
-    width:
-        108px;
+    width: 108px;
+    height: 108px;
 
-    height:
-        108px;
-
-    right:
-        19px;
-
-    top:
-        -59px;
+    right: 19px;
+    top: -59px;
 
     border-radius:
         50%;
@@ -609,39 +548,27 @@ body {
 }
 
 
-/* временная Р */
+/* временная буква Р */
 
 .word-card {
 
-    position:
-        absolute;
+    position: absolute;
 
-    left:
-        50%;
-
-    top:
-        43%;
+    left: 50%;
+    top: 43%;
 
     transform:
         translate(-50%, -50%);
 
-    z-index:
-        5;
+    z-index: 5;
 
-    width:
-        72px;
+    width: 72px;
+    height: 72px;
 
-    height:
-        72px;
+    display: flex;
 
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
+    align-items: center;
+    justify-content: center;
 
     border-radius:
         50%;
@@ -652,14 +579,14 @@ body {
     border:
         5px solid white;
 
+    color:
+        #425b76;
+
     font-size:
         40px;
 
     font-weight:
         900;
-
-    color:
-        #425b76;
 
     box-shadow:
         0 4px 12px
@@ -682,7 +609,6 @@ body {
                 calc(100vh + 240px)
             );
     }
-
 }
 
 
@@ -703,13 +629,11 @@ body {
 
     to {
 
-        opacity:
-            0;
+        opacity: 0;
 
         transform:
             scale(1.15);
     }
-
 }
 
 
@@ -719,20 +643,15 @@ body {
 
 #space {
 
-    position:
-        absolute;
+    position: absolute;
 
-    inset:
-        0;
+    inset: 0;
 
-    z-index:
-        5;
+    z-index: 5;
 
-    pointer-events:
-        none;
+    pointer-events: none;
 
-    opacity:
-        0;
+    opacity: 0;
 
     transition:
         opacity
@@ -798,8 +717,7 @@ body {
 
 #game.space-mode #space {
 
-    opacity:
-        1;
+    opacity: 1;
 }
 
 
@@ -809,30 +727,22 @@ body {
 
 #finishText {
 
-    position:
-        absolute;
+    position: absolute;
 
-    left:
-        50%;
-
-    top:
-        13%;
+    left: 50%;
+    top: 13%;
 
     transform:
         translate(-50%, -20px)
         scale(.9);
 
-    z-index:
-        60;
+    z-index: 60;
 
-    opacity:
-        0;
+    opacity: 0;
 
-    color:
-        white;
+    color: white;
 
-    text-align:
-        center;
+    text-align: center;
 
     font-size:
         clamp(
@@ -856,8 +766,7 @@ body {
 
 #finishText.show {
 
-    opacity:
-        1;
+    opacity: 1;
 
     transform:
         translate(-50%, 0)
@@ -875,13 +784,13 @@ body {
 
         width:
             clamp(
-                125px,
-                27vw,
-                170px
+                130px,
+                28vw,
+                175px
             );
 
         bottom:
-            13%;
+            20%;
     }
 
 
@@ -910,7 +819,6 @@ body {
         margin-left:
             -85px;
     }
-
 }
 
 </style>
@@ -925,17 +833,13 @@ body {
 
     <div id="airport"></div>
 
-    <div id="airportBlend"></div>
-
     <div id="skyTexture"></div>
 
     <div id="space"></div>
 
 
     <div id="startText">
-
         🚀 Нажми на ракету!
-
     </div>
 
 
@@ -962,9 +866,7 @@ body {
 
 
     <div id="finishText">
-
         Мы в космосе! 🚀✨
-
     </div>
 
 </div>
@@ -973,7 +875,7 @@ body {
 <script>
 
 /* =====================================================
-   ОГОНЬ
+   КАДРЫ ОГНЯ
 ===================================================== */
 
 const fireFrames = [
@@ -1032,12 +934,9 @@ const rounds = [
 ];
 
 
-const CLOUD_DURATION =
-    10;
+const CLOUD_DURATION = 10;
 
-
-const NEXT_ROUND_DELAY =
-    1200;
+const NEXT_ROUND_DELAY = 1200;
 
 
 /* =====================================================
@@ -1045,81 +944,61 @@ const NEXT_ROUND_DELAY =
 ===================================================== */
 
 const game =
-    document.getElementById(
-        "game"
-    );
+    document.getElementById("game");
 
 
 const rocket =
-    document.getElementById(
-        "rocket"
-    );
+    document.getElementById("rocket");
 
 
 const fireImage =
-    document.getElementById(
-        "fireImage"
-    );
+    document.getElementById("fireImage");
 
 
 const startText =
-    document.getElementById(
-        "startText"
-    );
+    document.getElementById("startText");
 
 
 const finishText =
-    document.getElementById(
-        "finishText"
-    );
+    document.getElementById("finishText");
 
 
 /* =====================================================
    СОСТОЯНИЕ
 ===================================================== */
 
-let gameStarted =
-    false;
+let gameStarted = false;
 
+let currentRound = 0;
 
-let currentRound =
-    0;
+let currentCloud = null;
 
+let canClickCloud = false;
 
-let currentCloud =
-    null;
-
-
-let canClickCloud =
-    false;
-
-
-let finishing =
-    false;
-
+let finishing = false;
 
 let currentRocketSide =
     "center";
 
 
 /* =====================================================
-   АНИМАЦИЯ ОГНЯ
+   ОГОНЬ
 ===================================================== */
 
 function startFireAnimation() {
 
-    if (fireTimer)
+    if (fireTimer) {
         return;
+    }
 
-
-    /*
-       Сразу показываем
-       первый кадр
-    */
 
     game.classList.add(
         "engine-on"
     );
+
+
+    fireImage.src =
+        fireFrames[0];
 
 
     fireTimer =
@@ -1133,8 +1012,7 @@ function startFireAnimation() {
                     fireFrames.length
                 ) {
 
-                    fireFrameIndex =
-                        0;
+                    fireFrameIndex = 0;
                 }
 
 
@@ -1146,7 +1024,6 @@ function startFireAnimation() {
             },
             95
         );
-
 }
 
 
@@ -1162,12 +1039,12 @@ rocket.addEventListener(
 
 function startGame() {
 
-    if (gameStarted)
+    if (gameStarted) {
         return;
+    }
 
 
-    gameStarted =
-        true;
+    gameStarted = true;
 
 
     startText.classList.add(
@@ -1176,17 +1053,17 @@ function startGame() {
 
 
     /*
-       ВКЛЮЧИЛИ ДВИГАТЕЛЬ
+       Сначала включается
+       двигатель.
     */
 
     startFireAnimation();
 
 
     /*
-       Примерно полсекунды
-       ракета ещё стоит
-       на площадке с работающим
-       двигателем.
+       Ракета полсекунды
+       стоит на площадке
+       с работающим двигателем.
     */
 
     setTimeout(
@@ -1198,12 +1075,11 @@ function startGame() {
 
 
             /*
-               Ракета начинает
-               подниматься.
+               Начинаем взлёт.
             */
 
             rocket.style.bottom =
-                "31%";
+                "37%";
 
         },
         500
@@ -1211,24 +1087,23 @@ function startGame() {
 
 
     /*
-       Ракета выходит
-       на основную игровую
-       высоту.
+       После взлёта
+       ракета занимает
+       игровую позицию.
     */
 
     setTimeout(
         () => {
 
             rocket.style.bottom =
-                "25%";
+                "27%";
 
 
             createRound();
 
         },
-        3300
+        3400
     );
-
 }
 
 
@@ -1249,8 +1124,7 @@ function createRound() {
     }
 
 
-    canClickCloud =
-        true;
+    canClickCloud = true;
 
 
     const data =
@@ -1338,12 +1212,9 @@ function createRound() {
                     createRound,
                     300
                 );
-
             }
-
         }
     );
-
 }
 
 
@@ -1365,8 +1236,7 @@ function chooseCloud(
     }
 
 
-    canClickCloud =
-        false;
+    canClickCloud = false;
 
 
     cloud.classList.add(
@@ -1384,7 +1254,6 @@ function chooseCloud(
 
             cloud.remove();
 
-
             currentCloud =
                 null;
 
@@ -1400,7 +1269,6 @@ function chooseCloud(
         createRound,
         NEXT_ROUND_DELAY
     );
-
 }
 
 
@@ -1408,22 +1276,13 @@ function chooseCloud(
    СМЕНА ТРАЕКТОРИИ
 ===================================================== */
 
-function moveRocketTo(
-    side
-) {
+function moveRocketTo(side) {
 
     currentRocketSide =
         side;
 
 
-    /*
-       ЛЕВАЯ ТРАЕКТОРИЯ
-    */
-
-    if (
-        side ===
-        "left"
-    ) {
+    if (side === "left") {
 
         rocket.style.left =
             "25%";
@@ -1434,14 +1293,7 @@ function moveRocketTo(
     }
 
 
-    /*
-       ЦЕНТР
-    */
-
-    if (
-        side ===
-        "center"
-    ) {
+    if (side === "center") {
 
         rocket.style.left =
             "50%";
@@ -1452,14 +1304,7 @@ function moveRocketTo(
     }
 
 
-    /*
-       ПРАВАЯ ТРАЕКТОРИЯ
-    */
-
-    if (
-        side ===
-        "right"
-    ) {
+    if (side === "right") {
 
         rocket.style.left =
             "75%";
@@ -1471,12 +1316,12 @@ function moveRocketTo(
 
 
     /*
-       После манёвра
-       ракета снова становится
-       вертикальной.
+       Ракета заканчивает
+       манёвр и снова
+       выравнивается.
 
-       НО остаётся
-       на новой траектории.
+       На новой траектории
+       она остаётся.
     */
 
     setTimeout(
@@ -1488,22 +1333,21 @@ function moveRocketTo(
         },
         850
     );
-
 }
 
 
 /* =====================================================
-   КОСМОС
+   ПЕРЕХОД В КОСМОС
 ===================================================== */
 
 function startSpaceSequence() {
 
-    if (finishing)
+    if (finishing) {
         return;
+    }
 
 
-    finishing =
-        true;
+    finishing = true;
 
 
     game.classList.add(
@@ -1514,8 +1358,7 @@ function startSpaceSequence() {
     /*
        Перед выходом
        в космос ракета
-       плавно возвращается
-       к центру.
+       возвращается к центру.
     */
 
     setTimeout(
@@ -1538,7 +1381,7 @@ function startSpaceSequence() {
 
 
     /*
-       Финальная надпись
+       Надпись
     */
 
     setTimeout(
@@ -1554,8 +1397,7 @@ function startSpaceSequence() {
 
 
     /*
-       Ракета улетает
-       вверх.
+       Финальный улёт
     */
 
     setTimeout(
@@ -1576,7 +1418,6 @@ function startSpaceSequence() {
         },
         4200
     );
-
 }
 
 </script>
