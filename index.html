@@ -8,9 +8,9 @@
 
 <style>
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 html,
@@ -20,140 +20,115 @@ body {
     overflow: hidden;
     font-family: Arial, sans-serif;
     user-select: none;
+    background: #7ed7ff;
 }
-
-body {
-    background: #8ed8ff;
-}
-
-/* =====================================================
-   ИГРОВОЕ ПОЛЕ
-===================================================== */
 
 #game {
     position: relative;
     width: 100vw;
     height: 100vh;
     overflow: hidden;
+    background: linear-gradient(
+        to bottom,
+        #4dbdff 0%,
+        #8de1ff 55%,
+        #dff7ff 100%
+    );
+}
+
+/* =====================================================
+   СТАРТОВЫЙ ФОН
+===================================================== */
+
+#airport {
+    position: absolute;
+    inset: 0;
+
+    background-image: url("fon.png");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    z-index: 1;
+
+    transform: translateY(0) scale(1);
+
+    transition:
+        transform 4.2s cubic-bezier(.22,.65,.3,1),
+        opacity 3.8s ease;
+}
+
+#game.flying #airport {
+    transform:
+        translateY(105%)
+        scale(1.08);
+
+    opacity: 0;
+}
+
+/* =====================================================
+   НЕБО ПОСЛЕ ВЗЛЁТА
+===================================================== */
+
+#sky {
+    position: absolute;
+    inset: 0;
+
+    z-index: 0;
 
     background:
         linear-gradient(
             to bottom,
-            #63c9ff 0%,
-            #8ddcff 55%,
-            #d9f4ff 100%
+            #45b8ff 0%,
+            #72ceff 45%,
+            #b9ebff 100%
         );
-
-    transition: background 2s ease;
 }
 
-/* =====================================================
-   ДВИЖУЩИЙСЯ ФОН
-===================================================== */
+/* лёгкое движение воздуха */
 
-#skyLayer {
+#skyTexture {
     position: absolute;
-    inset: -50% 0 0 0;
-    height: 200%;
+    inset: -40% 0 0 0;
+
+    height: 180%;
+
+    z-index: 2;
+
     pointer-events: none;
+
+    opacity: 0;
 
     background:
         radial-gradient(
             circle at 15% 20%,
-            rgba(255,255,255,.25) 0 2px,
+            rgba(255,255,255,.18) 0 2px,
             transparent 3px
         ),
         radial-gradient(
-            circle at 75% 40%,
-            rgba(255,255,255,.20) 0 2px,
+            circle at 80% 35%,
+            rgba(255,255,255,.16) 0 2px,
             transparent 3px
         );
 
-    background-size: 180px 220px;
+    background-size: 190px 230px;
+
+    transition: opacity 1.5s ease;
 }
 
-#game.flying #skyLayer {
-    animation: skyMove 7s linear infinite;
+#game.flying #skyTexture {
+    opacity: 1;
+    animation: skyMove 6s linear infinite;
 }
 
 @keyframes skyMove {
     from {
-        transform: translateY(0);
+        transform: translateY(-100px);
     }
 
     to {
-        transform: translateY(230px);
+        transform: translateY(240px);
     }
-}
-
-/* =====================================================
-   АЭРОДРОМ
-===================================================== */
-
-#ground {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-
-    width: 100%;
-    height: 25%;
-
-    background:
-        linear-gradient(
-            to bottom,
-            #71b75f 0 28%,
-            #649f53 28% 35%,
-            #8b8c8d 35% 100%
-        );
-
-    transition:
-        transform 3s ease-in,
-        opacity 2.5s ease;
-}
-
-#game.flying #ground {
-    transform: translateY(130%);
-    opacity: 0;
-}
-
-#runway {
-    position: absolute;
-
-    left: 50%;
-    bottom: 0;
-
-    transform: translateX(-50%);
-
-    width: 30%;
-    height: 70%;
-
-    background: #606569;
-
-    clip-path: polygon(
-        40% 0,
-        60% 0,
-        100% 100%,
-        0 100%
-    );
-}
-
-#runway::after {
-    content: "";
-
-    position: absolute;
-
-    left: 49%;
-    top: 4%;
-
-    width: 3%;
-    height: 100%;
-
-    background:
-        repeating-linear-gradient(
-            to bottom,
-            white 0 25px,
-            transparent 25px 55px
-        );
 }
 
 /* =====================================================
@@ -164,171 +139,74 @@ body {
     position: absolute;
 
     left: 50%;
-    bottom: 10%;
+    bottom: 8%;
 
-    width: 105px;
-    height: 190px;
+    transform:
+        translateX(-50%);
 
-    transform: translateX(-50%);
+    width: clamp(120px, 11vw, 190px);
 
     z-index: 30;
 
     cursor: pointer;
 
     transition:
-        left 1.2s cubic-bezier(.22,.8,.25,1),
-        bottom 2.6s cubic-bezier(.22,.8,.25,1),
-        transform .5s ease;
+        left 1.15s cubic-bezier(.22,.75,.3,1),
+        bottom 2.6s cubic-bezier(.22,.75,.3,1),
+        transform .55s ease;
 }
 
-.rocket-body {
-    position: absolute;
+#rocketImage {
+    display: block;
 
-    left: 22px;
-    top: 12px;
+    width: 100%;
+    height: auto;
 
-    width: 61px;
-    height: 125px;
+    position: relative;
 
-    background: linear-gradient(
-        90deg,
-        #efefef,
-        white 45%,
-        #d8d8d8
-    );
+    z-index: 3;
 
-    border-radius: 50% 50% 23% 23%;
-
-    box-shadow:
-        inset -5px 0 8px rgba(0,0,0,.08),
-        0 5px 12px rgba(0,0,0,.15);
+    pointer-events: none;
 }
 
-.rocket-body::before {
-    content: "";
-
-    position: absolute;
-
-    left: 0;
-    top: -31px;
-
-    width: 61px;
-    height: 55px;
-
-    background: #ed5257;
-
-    clip-path: polygon(
-        50% 0,
-        100% 72%,
-        100% 100%,
-        0 100%,
-        0 72%
-    );
-
-    border-radius: 50% 50% 0 0;
-}
-
-.window {
-    position: absolute;
-
-    left: 14px;
-    top: 31px;
-
-    width: 34px;
-    height: 34px;
-
-    border-radius: 50%;
-
-    background: #65cdf4;
-
-    border: 5px solid #415f72;
-
-    box-shadow:
-        inset 3px 3px 5px rgba(255,255,255,.5);
-}
-
-.fin-left,
-.fin-right {
-    position: absolute;
-
-    bottom: 34px;
-
-    width: 33px;
-    height: 55px;
-
-    background: #ed5257;
-}
-
-.fin-left {
-    left: 8px;
-
-    clip-path: polygon(
-        100% 0,
-        100% 100%,
-        0 100%,
-        35% 25%
-    );
-}
-
-.fin-right {
-    right: 8px;
-
-    clip-path: polygon(
-        0 0,
-        0 100%,
-        100% 100%,
-        65% 25%
-    );
-}
+/* =====================================================
+   ОГОНЬ
+===================================================== */
 
 #fire {
     position: absolute;
 
-    left: 38px;
-    top: 132px;
+    left: 50%;
+    top: 88%;
 
-    width: 29px;
-    height: 68px;
+    transform:
+        translateX(-50%);
+
+    width: 64%;
+
+    z-index: 1;
 
     opacity: 0;
 
-    transform-origin: top center;
+    pointer-events: none;
+}
 
-    background:
-        linear-gradient(
-            to bottom,
-            #fff167 0%,
-            #ffa12c 40%,
-            #ff5032 70%,
-            transparent 100%
-        );
+#fire img {
+    display: block;
 
-    clip-path: polygon(
-        50% 100%,
-        0 0,
-        100% 0
-    );
+    width: 100%;
+    height: auto;
 }
 
 #game.flying #fire {
     opacity: 1;
-    animation: flame .14s ease-in-out infinite alternate;
 }
 
-@keyframes flame {
-    from {
-        transform: scaleY(.78) scaleX(.85);
-    }
-
-    to {
-        transform: scaleY(1.15) scaleX(1.05);
-    }
-}
-
-/* лёгкое покачивание */
+/* лёгкая вибрация во время полёта */
 
 #game.flying #rocket {
-    animation: rocketFloat .75s ease-in-out infinite alternate;
+    animation:
+        rocketFloat .72s ease-in-out infinite alternate;
 }
 
 @keyframes rocketFloat {
@@ -342,35 +220,44 @@ body {
 }
 
 /* =====================================================
-   СТАРТОВАЯ ПОДСКАЗКА
+   СТАРТОВАЯ НАДПИСЬ
 ===================================================== */
 
 #startText {
     position: absolute;
 
-    top: 8%;
     left: 50%;
+    top: 7%;
 
-    transform: translateX(-50%);
-
-    padding: 14px 28px;
-
-    border-radius: 30px;
-
-    background: rgba(255,255,255,.88);
-
-    color: #294d68;
-
-    font-size: clamp(18px, 2.3vw, 30px);
-    font-weight: 700;
+    transform:
+        translateX(-50%);
 
     z-index: 50;
 
-    box-shadow: 0 5px 15px rgba(0,0,0,.1);
+    padding:
+        15px 30px;
+
+    border-radius: 40px;
+
+    background:
+        rgba(255,255,255,.88);
+
+    backdrop-filter:
+        blur(6px);
+
+    font-size:
+        clamp(18px, 2.2vw, 31px);
+
+    font-weight: 800;
+
+    color: #244e6c;
+
+    box-shadow:
+        0 6px 18px rgba(0,0,0,.13);
 
     transition:
-        opacity .4s ease,
-        transform .4s ease;
+        opacity .5s ease,
+        transform .5s ease;
 }
 
 #startText.hidden {
@@ -378,7 +265,7 @@ body {
 
     transform:
         translateX(-50%)
-        translateY(-20px);
+        translateY(-25px);
 
     pointer-events: none;
 }
@@ -390,14 +277,15 @@ body {
 .cloud-wrapper {
     position: absolute;
 
-    top: -180px;
+    top: -170px;
 
-    width: 210px;
-    height: 125px;
+    width: 220px;
+    height: 130px;
 
     z-index: 20;
 
-    animation: cloudDown 10s linear forwards;
+    animation:
+        cloudDown 10s linear forwards;
 }
 
 .cloud-wrapper.left {
@@ -406,7 +294,8 @@ body {
 
 .cloud-wrapper.center {
     left: 50%;
-    margin-left: -105px;
+
+    margin-left: -110px;
 }
 
 .cloud-wrapper.right {
@@ -416,14 +305,14 @@ body {
 .cloud {
     position: relative;
 
-    width: 210px;
-    height: 125px;
+    width: 100%;
+    height: 100%;
 
     cursor: pointer;
 
     filter:
         drop-shadow(
-            0 8px 8px rgba(40,110,150,.12)
+            0 8px 8px rgba(50,100,130,.15)
         );
 }
 
@@ -431,10 +320,10 @@ body {
     position: absolute;
 
     left: 10px;
-    bottom: 8px;
+    bottom: 7px;
 
-    width: 190px;
-    height: 68px;
+    width: 200px;
+    height: 70px;
 
     background: white;
 
@@ -446,15 +335,15 @@ body {
 
     position: absolute;
 
-    width: 86px;
-    height: 86px;
+    width: 92px;
+    height: 92px;
 
-    left: 29px;
-    top: -42px;
-
-    background: white;
+    left: 30px;
+    top: -44px;
 
     border-radius: 50%;
+
+    background: white;
 }
 
 .cloud-shape::after {
@@ -462,79 +351,85 @@ body {
 
     position: absolute;
 
-    width: 104px;
-    height: 104px;
+    width: 108px;
+    height: 108px;
 
-    right: 18px;
-    top: -57px;
-
-    background: white;
+    right: 19px;
+    top: -59px;
 
     border-radius: 50%;
+
+    background: white;
 }
 
-/* временная карточка */
+/* временная картинка Р */
 
 .word-card {
     position: absolute;
 
     left: 50%;
-    top: 44%;
+    top: 43%;
 
-    transform: translate(-50%, -50%);
+    transform:
+        translate(-50%, -50%);
 
-    width: 68px;
-    height: 68px;
+    z-index: 5;
 
-    border-radius: 50%;
-
-    background: #ffd64d;
-
-    border: 5px solid white;
+    width: 72px;
+    height: 72px;
 
     display: flex;
 
     align-items: center;
     justify-content: center;
 
-    font-size: 38px;
+    border-radius: 50%;
+
+    background:
+        #ffd847;
+
+    border:
+        5px solid white;
+
+    font-size: 40px;
     font-weight: 900;
 
-    color: #475a78;
-
-    z-index: 5;
+    color:
+        #425b76;
 
     box-shadow:
-        0 5px 12px rgba(0,0,0,.15);
-
-    transition: transform .2s ease;
-}
-
-.cloud:hover .word-card {
-    transform:
-        translate(-50%, -50%)
-        scale(1.08);
+        0 4px 12px rgba(0,0,0,.15);
 }
 
 @keyframes cloudDown {
+
     from {
-        transform: translateY(0);
+        transform:
+            translateY(0);
     }
 
     to {
-        transform: translateY(calc(100vh + 250px));
+        transform:
+            translateY(
+                calc(100vh + 240px)
+            );
     }
 }
 
 .cloud-wrapper.correct {
     pointer-events: none;
-    animation: cloudDisappear .6s ease forwards;
+
+    animation:
+        cloudOut .55s ease forwards;
 }
 
-@keyframes cloudDisappear {
+@keyframes cloudOut {
+
     to {
         opacity: 0;
-        transform: scale(1.12);
+
+        transform:
+            scale(1.15);
     }
 }
 
@@ -553,31 +448,54 @@ body {
 
     opacity: 0;
 
-    transition: opacity 2.3s ease;
+    transition:
+        opacity 2.8s ease;
 
     background:
-        radial-gradient(circle at 20% 16%, white 0 2px, transparent 3px),
-        radial-gradient(circle at 82% 23%, white 0 2px, transparent 3px),
-        radial-gradient(circle at 42% 35%, white 0 1.5px, transparent 2.5px),
-        radial-gradient(circle at 67% 51%, white 0 2px, transparent 3px),
-        radial-gradient(circle at 13% 67%, white 0 1.5px, transparent 2.5px),
-        radial-gradient(circle at 89% 74%, white 0 2px, transparent 3px),
-        radial-gradient(circle at 37% 82%, white 0 1.5px, transparent 2.5px),
+        radial-gradient(
+            circle at 15% 20%,
+            white 0 2px,
+            transparent 3px
+        ),
+        radial-gradient(
+            circle at 75% 18%,
+            white 0 1.5px,
+            transparent 2.5px
+        ),
+        radial-gradient(
+            circle at 42% 38%,
+            white 0 2px,
+            transparent 3px
+        ),
+        radial-gradient(
+            circle at 82% 55%,
+            white 0 2px,
+            transparent 3px
+        ),
+        radial-gradient(
+            circle at 22% 70%,
+            white 0 1.5px,
+            transparent 2.5px
+        ),
+        radial-gradient(
+            circle at 65% 82%,
+            white 0 2px,
+            transparent 3px
+        ),
         linear-gradient(
             to bottom,
-            #142354,
-            #080d2d 52%,
-            #030618
+            #162656,
+            #090f32 55%,
+            #020513
         );
 
     background-size:
         250px 250px,
         310px 310px,
-        180px 180px,
-        290px 290px,
+        190px 190px,
+        280px 280px,
         230px 230px,
-        350px 350px,
-        210px 210px,
+        340px 340px,
         auto;
 }
 
@@ -593,7 +511,7 @@ body {
     position: absolute;
 
     left: 50%;
-    top: 15%;
+    top: 13%;
 
     transform:
         translate(-50%, -20px)
@@ -607,13 +525,17 @@ body {
 
     text-align: center;
 
-    font-size: clamp(28px, 4vw, 54px);
+    font-size:
+        clamp(30px, 4vw, 58px);
+
     font-weight: 900;
 
     text-shadow:
-        0 4px 12px rgba(0,0,0,.4);
+        0 4px 14px rgba(0,0,0,.4);
 
-    transition: all .8s ease;
+    transition:
+        opacity .8s ease,
+        transform .8s ease;
 }
 
 #finishText.show {
@@ -625,29 +547,32 @@ body {
 }
 
 /* =====================================================
-   МОБИЛЬНАЯ АДАПТАЦИЯ
+   МОБИЛЬНЫЕ
 ===================================================== */
 
 @media (max-width: 700px) {
 
     #rocket {
-        transform:
-            translateX(-50%)
-            scale(.86);
+        width:
+            clamp(105px, 24vw, 150px);
     }
 
     .cloud-wrapper {
         width: 170px;
-        height: 110px;
+        height: 105px;
     }
 
     .cloud {
-        transform: scale(.82);
-        transform-origin: top left;
+        transform:
+            scale(.78);
+
+        transform-origin:
+            top left;
     }
 
     .cloud-wrapper.center {
-        margin-left: -85px;
+        margin-left:
+            -85px;
     }
 }
 
@@ -658,30 +583,37 @@ body {
 
 <div id="game">
 
-    <div id="space"></div>
+    <div id="sky"></div>
 
-    <div id="skyLayer"></div>
+    <div id="airport"></div>
+
+    <div id="skyTexture"></div>
+
+    <div id="space"></div>
 
     <div id="startText">
         🚀 Нажми на ракету!
     </div>
 
-    <div id="ground">
-        <div id="runway"></div>
-    </div>
 
     <div id="rocket">
 
-        <div class="fin-left"></div>
-        <div class="fin-right"></div>
-
-        <div class="rocket-body">
-            <div class="window"></div>
+        <div id="fire">
+            <img
+                id="fireImage"
+                src="fire1.png"
+                alt=""
+            >
         </div>
 
-        <div id="fire"></div>
+        <img
+            id="rocketImage"
+            src="reketa.png"
+            alt="Ракета"
+        >
 
     </div>
+
 
     <div id="finishText">
         Мы в космосе! 🚀✨
@@ -689,7 +621,28 @@ body {
 
 </div>
 
+
 <script>
+
+/* =====================================================
+   КАДРЫ ОГНЯ
+===================================================== */
+
+const fireFrames = [
+
+    "fire1.png",
+    "fire2.png",
+    "fire3.png",
+    "fire4.png",
+    "fire5.png",
+    "fire6.png"
+
+];
+
+let fireFrameIndex = 0;
+
+let fireTimer = null;
+
 
 /* =====================================================
    РАУНДЫ
@@ -713,12 +666,12 @@ const rounds = [
     },
 
     {
-        side: "right",
+        side: "left",
         text: "Р"
     },
 
     {
-        side: "left",
+        side: "right",
         text: "Р"
     },
 
@@ -729,11 +682,8 @@ const rounds = [
 
 ];
 
-/* скорость облаков */
 
 const CLOUD_DURATION = 10;
-
-/* пауза между облаками */
 
 const NEXT_ROUND_DELAY = 1200;
 
@@ -747,6 +697,9 @@ const game =
 
 const rocket =
     document.getElementById("rocket");
+
+const fireImage =
+    document.getElementById("fireImage");
 
 const startText =
     document.getElementById("startText");
@@ -769,7 +722,41 @@ let canClickCloud = false;
 
 let finishing = false;
 
-let currentRocketSide = "center";
+let currentRocketSide =
+    "center";
+
+
+/* =====================================================
+   АНИМАЦИЯ ОГНЯ
+===================================================== */
+
+function startFireAnimation() {
+
+    if (fireTimer) return;
+
+    fireTimer =
+        setInterval(
+            () => {
+
+                fireFrameIndex++;
+
+                if (
+                    fireFrameIndex >=
+                    fireFrames.length
+                ) {
+
+                    fireFrameIndex = 0;
+                }
+
+                fireImage.src =
+                    fireFrames[
+                        fireFrameIndex
+                    ];
+
+            },
+            95
+        );
+}
 
 
 /* =====================================================
@@ -787,32 +774,61 @@ function startGame() {
 
     gameStarted = true;
 
-    game.classList.add("flying");
+    startText.classList.add(
+        "hidden"
+    );
 
-    startText.classList.add("hidden");
+    startFireAnimation();
 
-    rocket.style.bottom = "29%";
+    /*
+       короткая пауза:
+       двигатель включился,
+       но ракета ещё стоит
+    */
 
     setTimeout(
         () => {
 
-            rocket.style.bottom = "25%";
+            game.classList.add(
+                "flying"
+            );
+
+            rocket.style.bottom =
+                "27%";
+
+        },
+        450
+    );
+
+
+    /*
+       ракета выходит
+       на игровую высоту
+    */
+
+    setTimeout(
+        () => {
+
+            rocket.style.bottom =
+                "24%";
 
             createRound();
 
         },
-        2600
+        3100
     );
 }
 
 
 /* =====================================================
-   СОЗДАНИЕ ОБЛАКА
+   ОБЛАКА
 ===================================================== */
 
 function createRound() {
 
-    if (currentRound >= rounds.length) {
+    if (
+        currentRound >= rounds.length
+    ) {
 
         startSpaceSequence();
 
@@ -825,7 +841,9 @@ function createRound() {
         rounds[currentRound];
 
     const wrapper =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
     wrapper.className =
         `cloud-wrapper ${data.side}`;
@@ -837,19 +855,25 @@ function createRound() {
 
         <div class="cloud">
 
-            <div class="cloud-shape"></div>
+            <div class="cloud-shape">
+            </div>
 
             <div class="word-card">
+
                 ${data.text}
+
             </div>
 
         </div>
-
     `;
 
-    game.appendChild(wrapper);
+    game.appendChild(
+        wrapper
+    );
 
-    currentCloud = wrapper;
+    currentCloud =
+        wrapper;
+
 
     wrapper.addEventListener(
         "click",
@@ -859,22 +883,27 @@ function createRound() {
                 wrapper,
                 data.side
             );
-
         }
     );
+
 
     wrapper.addEventListener(
         "animationend",
         () => {
 
             if (
-                wrapper === currentCloud &&
-                !wrapper.classList.contains("correct")
+                wrapper ===
+                    currentCloud
+                &&
+                !wrapper.classList.contains(
+                    "correct"
+                )
             ) {
 
                 wrapper.remove();
 
-                currentCloud = null;
+                currentCloud =
+                    null;
 
                 setTimeout(
                     createRound,
@@ -887,7 +916,7 @@ function createRound() {
 
 
 /* =====================================================
-   НАЖАТИЕ НА ОБЛАКО
+   ВЫБОР ОБЛАКА
 ===================================================== */
 
 function chooseCloud(
@@ -902,19 +931,24 @@ function chooseCloud(
 
     canClickCloud = false;
 
-    cloud.classList.add("correct");
+    cloud.classList.add(
+        "correct"
+    );
 
-    moveRocketTo(side);
+    moveRocketTo(
+        side
+    );
 
     setTimeout(
         () => {
 
             cloud.remove();
 
-            currentCloud = null;
+            currentCloud =
+                null;
 
         },
-        600
+        550
     );
 
     currentRound++;
@@ -932,36 +966,43 @@ function chooseCloud(
 
 function moveRocketTo(side) {
 
-    currentRocketSide = side;
+    currentRocketSide =
+        side;
+
 
     if (side === "left") {
 
-        rocket.style.left = "25%";
+        rocket.style.left =
+            "25%";
 
         rocket.style.transform =
             "translateX(-50%) rotate(-7deg)";
     }
 
+
     if (side === "center") {
 
-        rocket.style.left = "50%";
+        rocket.style.left =
+            "50%";
 
         rocket.style.transform =
             "translateX(-50%) rotate(0deg)";
     }
 
+
     if (side === "right") {
 
-        rocket.style.left = "75%";
+        rocket.style.left =
+            "75%";
 
         rocket.style.transform =
             "translateX(-50%) rotate(7deg)";
     }
 
+
     /*
-       Через короткое время ракета
-       выпрямляется, но остаётся
-       на новой траектории.
+       ракета выравнивается,
+       но остаётся на новой траектории
     */
 
     setTimeout(
@@ -971,13 +1012,13 @@ function moveRocketTo(side) {
                 "translateX(-50%) rotate(0deg)";
 
         },
-        900
+        850
     );
 }
 
 
 /* =====================================================
-   ПЕРЕХОД В КОСМОС
+   КОСМОС
 ===================================================== */
 
 function startSpaceSequence() {
@@ -990,25 +1031,28 @@ function startSpaceSequence() {
         "space-mode"
     );
 
+
     /*
-       Перед входом в космос
-       ракета плавно идёт в центр.
+       ракета возвращается
+       ближе к центру
     */
 
     setTimeout(
         () => {
 
-            rocket.style.left = "50%";
+            rocket.style.left =
+                "50%";
 
             rocket.style.transform =
                 "translateX(-50%) rotate(0deg)";
 
             rocket.style.bottom =
-                "48%";
+                "46%";
 
         },
         700
     );
+
 
     setTimeout(
         () => {
@@ -1021,19 +1065,24 @@ function startSpaceSequence() {
         2500
     );
 
+
+    /*
+       финальный улёт
+    */
+
     setTimeout(
         () => {
 
             rocket.style.transition =
                 "bottom 3.2s ease-in, " +
                 "left 1.2s ease, " +
-                "transform .6s ease";
+                "transform .7s ease";
 
             rocket.style.bottom =
                 "115%";
 
         },
-        4000
+        4200
     );
 }
 
