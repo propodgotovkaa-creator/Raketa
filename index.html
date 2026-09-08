@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Полёт ракеты</title>
 
 <style>
+
 *{
     margin:0;
     padding:0;
@@ -222,7 +224,12 @@ body{
 
 #game.flying #skyTexture{
     opacity:1;
-    animation:skyMove 6s linear infinite;
+
+    animation:
+        skyMove
+        6s
+        linear
+        infinite;
 }
 
 @keyframes skyMove{
@@ -236,7 +243,37 @@ body{
 }
 
 /* =====================================================
-   КОСМОС ДЛЯ ОСНОВНОЙ ИГРЫ
+   ЗАТЕМНЕНИЕ ПЕРЕД КОСМОСОМ
+===================================================== */
+
+#spaceTransition{
+    position:absolute;
+    inset:0;
+
+    z-index:7;
+
+    pointer-events:none;
+    opacity:0;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(31,91,151,0) 0%,
+            rgba(24,61,118,.15) 25%,
+            rgba(17,39,88,.42) 55%,
+            rgba(8,18,54,.75) 80%,
+            rgba(3,8,30,.92) 100%
+        );
+
+    transition:opacity 2.2s ease;
+}
+
+#game.space-prep #spaceTransition{
+    opacity:1;
+}
+
+/* =====================================================
+   КОСМОС — НАША КАРТИНКА
 ===================================================== */
 
 #space{
@@ -248,7 +285,7 @@ body{
     pointer-events:none;
     opacity:0;
 
-    transform:scale(1.04);
+    transform:scale(1.035);
 
     transition:
         opacity 3.2s ease,
@@ -394,12 +431,12 @@ body{
     z-index:1;
 
     opacity:0;
-
     pointer-events:none;
 }
 
 #fire img{
     display:block;
+
     width:100%;
     height:auto;
 }
@@ -449,9 +486,7 @@ body{
 
     border-radius:40px;
 
-    background:
-        rgba(255,255,255,.90);
-
+    background:rgba(255,255,255,.90);
     backdrop-filter:blur(7px);
 
     color:#244e6c;
@@ -662,7 +697,6 @@ body{
     opacity:0;
 
     color:white;
-
     text-align:center;
 
     font-size:
@@ -689,31 +723,6 @@ body{
     transform:
         translate(-50%,0)
         scale(1);
-}
-
-/* =====================================================
-   ВРЕМЕННЫЙ ТЕСТ КОСМОСА
-===================================================== */
-
-#spaceTest{
-    position:fixed;
-    inset:0;
-
-    z-index:999999;
-
-    display:none;
-
-    background:black;
-}
-
-#spaceTest img{
-    display:block;
-
-    width:100%;
-    height:100%;
-
-    object-fit:cover;
-    object-position:center;
 }
 
 /* =====================================================
@@ -765,27 +774,35 @@ body{
 
     <div id="skyTexture"></div>
 
+    <div id="spaceTransition"></div>
 
-    <!-- КОСМОС ОСНОВНОЙ ИГРЫ -->
+
+    <!-- НАШ КОСМОС -->
 
     <div id="space">
 
         <img
             id="spaceImage"
-            src="https://propodgotovkaa-creator.github.io/Raketa/kosmos.png"
+            src="6B6A25F9-18FE-4AE2-BDE9-7FEC48B003DE.png"
             alt=""
         >
 
     </div>
 
 
+    <!-- МЕРЦАЮЩИЕ ЗВЁЗДЫ -->
+
     <div id="stars"></div>
 
+
+    <!-- СТАРТОВАЯ НАДПИСЬ -->
 
     <div id="startText">
         🚀 Нажми на ракету!
     </div>
 
+
+    <!-- РАКЕТА -->
 
     <div id="rocket">
 
@@ -808,23 +825,11 @@ body{
     </div>
 
 
+    <!-- ФИНАЛ -->
+
     <div id="finishText">
         Мы в космосе! 🚀✨
     </div>
-
-</div>
-
-
-<!-- =================================================
-     ВРЕМЕННЫЙ ТЕСТ
-================================================== -->
-
-<div id="spaceTest">
-
-    <img
-        src="https://propodgotovkaa-creator.github.io/Raketa/kosmos.png"
-        alt=""
-    >
 
 </div>
 
@@ -887,7 +892,6 @@ const rounds = [
 ];
 
 const CLOUD_DURATION = 10;
-
 const NEXT_ROUND_DELAY = 1200;
 
 
@@ -940,18 +944,14 @@ function createStars(){
     ){
 
         const star =
-            document.createElement(
-                "div"
-            );
+            document.createElement("div");
 
         star.className = "star";
 
         if(
             Math.random() > .82
         ){
-            star.classList.add(
-                "big"
-            );
+            star.classList.add("big");
         }
 
         const size =
@@ -980,9 +980,7 @@ function createStars(){
                 Math.random() * 2.5
             ) + "s";
 
-        stars.appendChild(
-            star
-        );
+        stars.appendChild(star);
     }
 }
 
@@ -990,7 +988,7 @@ createStars();
 
 
 /* =====================================================
-   ОГОНЬ
+   АНИМАЦИЯ ОГНЯ
 ===================================================== */
 
 function startFireAnimation(){
@@ -1082,7 +1080,7 @@ function startGame(){
 
 
 /* =====================================================
-   ОБЛАКА
+   СОЗДАНИЕ ОБЛАКА
 ===================================================== */
 
 function createRound(){
@@ -1100,14 +1098,10 @@ function createRound(){
     canClickCloud = true;
 
     const data =
-        rounds[
-            currentRound
-        ];
+        rounds[currentRound];
 
     const wrapper =
-        document.createElement(
-            "div"
-        );
+        document.createElement("div");
 
     wrapper.className =
         `cloud-wrapper ${data.side}`;
@@ -1129,9 +1123,7 @@ function createRound(){
 
     `;
 
-    game.appendChild(
-        wrapper
-    );
+    game.appendChild(wrapper);
 
     currentCloud =
         wrapper;
@@ -1153,8 +1145,7 @@ function createRound(){
         () => {
 
             if(
-                wrapper ===
-                    currentCloud
+                wrapper === currentCloud
                 &&
                 !wrapper.classList.contains(
                     "correct"
@@ -1177,7 +1168,7 @@ function createRound(){
 
 
 /* =====================================================
-   КЛИК ПО ОБЛАКУ
+   НАЖАТИЕ НА ОБЛАКО
 ===================================================== */
 
 function chooseCloud(
@@ -1198,9 +1189,7 @@ function chooseCloud(
         "correct"
     );
 
-    moveRocketTo(
-        side
-    );
+    moveRocketTo(side);
 
     setTimeout(
         () => {
@@ -1269,7 +1258,7 @@ function moveRocketTo(side){
 
 
 /* =====================================================
-   КОСМОС
+   ПЕРЕХОД В КОСМОС
 ===================================================== */
 
 function startSpaceSequence(){
@@ -1280,14 +1269,41 @@ function startSpaceSequence(){
 
     finishing = true;
 
+
+    /*
+       Ракета возвращается
+       к центру.
+    */
+
     rocket.style.left =
         "50%";
 
     rocket.style.transform =
         "translateX(-50%) rotate(0deg)";
 
+
+    /*
+       И начинает подниматься.
+    */
+
     rocket.style.bottom =
         "40%";
+
+
+    /*
+       Сначала немного
+       темнеет небо.
+    */
+
+    game.classList.add(
+        "space-prep"
+    );
+
+
+    /*
+       Затем проявляется
+       наша картинка космоса.
+    */
 
     setTimeout(
         () => {
@@ -1297,8 +1313,14 @@ function startSpaceSequence(){
             );
 
         },
-        500
+        1100
     );
+
+
+    /*
+       Ракета продолжает
+       подниматься.
+    */
 
     setTimeout(
         () => {
@@ -1307,8 +1329,13 @@ function startSpaceSequence(){
                 "48%";
 
         },
-        2400
+        2700
     );
+
+
+    /*
+       Финальная надпись.
+    */
 
     setTimeout(
         () => {
@@ -1318,8 +1345,13 @@ function startSpaceSequence(){
             );
 
         },
-        4000
+        4300
     );
+
+
+    /*
+       Ракета улетает дальше.
+    */
 
     setTimeout(
         () => {
@@ -1333,38 +1365,9 @@ function startSpaceSequence(){
                 "118%";
 
         },
-        5800
+        6100
     );
 }
-
-
-/* =====================================================
-   ВРЕМЕННЫЙ ТЕСТ KOSMOS.PNG
-===================================================== */
-
-/*
-   НИЧЕГО В ИГРЕ НЕ МЕНЯЕМ.
-
-   Через 3 секунды после загрузки
-   страницы kosmos.png должен
-   принудительно появиться
-   ПОВЕРХ ВСЕГО.
-*/
-
-setTimeout(
-    () => {
-
-        const test =
-            document.getElementById(
-                "spaceTest"
-            );
-
-        test.style.display =
-            "block";
-
-    },
-    3000
-);
 
 </script>
 
