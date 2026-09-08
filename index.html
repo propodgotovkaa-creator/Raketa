@@ -94,16 +94,6 @@ body {
         translateY(0)
         scale(1);
 
-    /*
-       Главное изменение:
-       нижняя часть картинки
-       постепенно растворяется.
-
-       Поэтому при движении вниз
-       мы не увидим жёсткую
-       горизонтальную границу.
-    */
-
     -webkit-mask-image:
         linear-gradient(
             to bottom,
@@ -142,11 +132,6 @@ body {
         transform 5s cubic-bezier(.20,.65,.25,1),
         opacity 4.6s ease;
 }
-
-
-/*
-   При взлёте фон движется вниз.
-*/
 
 #game.flying #airport {
 
@@ -199,7 +184,6 @@ body {
         opacity 1.5s ease;
 }
 
-
 #game.flying #skyTexture {
 
     opacity: 1;
@@ -210,7 +194,6 @@ body {
         linear
         infinite;
 }
-
 
 @keyframes skyMove {
 
@@ -236,21 +219,10 @@ body {
 
     left: 50%;
 
-    /*
-       ПОДНЯЛИ РАКЕТУ.
-
-       Теперь она стоит
-       на белой стартовой площадке.
-    */
-
-    bottom: 20.5%;
+    bottom: 25%;
 
     transform:
         translateX(-50%);
-
-    /*
-       Чуть крупнее предыдущей.
-    */
 
     width:
         clamp(
@@ -278,7 +250,6 @@ body {
         ease;
 }
 
-
 #rocketImage {
 
     display: block;
@@ -304,13 +275,6 @@ body {
 
     left: 50%;
 
-    /*
-       Подняли пламя
-       ещё совсем немного,
-       чтобы оно выходило
-       прямо из ракеты.
-    */
-
     top: 84%;
 
     transform:
@@ -325,7 +289,6 @@ body {
     pointer-events: none;
 }
 
-
 #fire img {
 
     display: block;
@@ -333,7 +296,6 @@ body {
     width: 100%;
     height: auto;
 }
-
 
 #game.engine-on #fire {
 
@@ -354,7 +316,6 @@ body {
         infinite
         alternate;
 }
-
 
 @keyframes rocketFloat {
 
@@ -418,7 +379,6 @@ body {
         transform .5s ease;
 }
 
-
 #startText.hidden {
 
     opacity: 0;
@@ -453,11 +413,9 @@ body {
         forwards;
 }
 
-
 .cloud-wrapper.left {
     left: 7%;
 }
-
 
 .cloud-wrapper.center {
 
@@ -467,11 +425,9 @@ body {
         -110px;
 }
 
-
 .cloud-wrapper.right {
     right: 7%;
 }
-
 
 .cloud {
 
@@ -489,7 +445,6 @@ body {
         );
 }
 
-
 .cloud-shape {
 
     position: absolute;
@@ -506,7 +461,6 @@ body {
     border-radius:
         60px;
 }
-
 
 .cloud-shape::before {
 
@@ -527,7 +481,6 @@ body {
         white;
 }
 
-
 .cloud-shape::after {
 
     content: "";
@@ -546,9 +499,6 @@ body {
     background:
         white;
 }
-
-
-/* временная буква Р */
 
 .word-card {
 
@@ -593,7 +543,6 @@ body {
         rgba(0,0,0,.15);
 }
 
-
 @keyframes cloudDown {
 
     from {
@@ -611,7 +560,6 @@ body {
     }
 }
 
-
 .cloud-wrapper.correct {
 
     pointer-events:
@@ -623,7 +571,6 @@ body {
         ease
         forwards;
 }
-
 
 @keyframes cloudOut {
 
@@ -714,7 +661,6 @@ body {
         auto;
 }
 
-
 #game.space-mode #space {
 
     opacity: 1;
@@ -763,7 +709,6 @@ body {
         transform .8s ease;
 }
 
-
 #finishText.show {
 
     opacity: 1;
@@ -790,9 +735,8 @@ body {
             );
 
         bottom:
-            20%;
+            24.5%;
     }
-
 
     .cloud-wrapper {
 
@@ -803,7 +747,6 @@ body {
             105px;
     }
 
-
     .cloud {
 
         transform:
@@ -812,7 +755,6 @@ body {
         transform-origin:
             top left;
     }
-
 
     .cloud-wrapper.center {
 
@@ -991,15 +933,12 @@ function startFireAnimation() {
         return;
     }
 
-
     game.classList.add(
         "engine-on"
     );
 
-
     fireImage.src =
         fireFrames[0];
-
 
     fireTimer =
         setInterval(
@@ -1014,7 +953,6 @@ function startFireAnimation() {
 
                     fireFrameIndex = 0;
                 }
-
 
                 fireImage.src =
                     fireFrames[
@@ -1043,28 +981,13 @@ function startGame() {
         return;
     }
 
-
     gameStarted = true;
-
 
     startText.classList.add(
         "hidden"
     );
 
-
-    /*
-       Сначала включается
-       двигатель.
-    */
-
     startFireAnimation();
-
-
-    /*
-       Ракета полсекунды
-       стоит на площадке
-       с работающим двигателем.
-    */
 
     setTimeout(
         () => {
@@ -1073,31 +996,18 @@ function startGame() {
                 "flying"
             );
 
-
-            /*
-               Начинаем взлёт.
-            */
-
             rocket.style.bottom =
-                "37%";
+                "39%";
 
         },
         500
     );
-
-
-    /*
-       После взлёта
-       ракета занимает
-       игровую позицию.
-    */
 
     setTimeout(
         () => {
 
             rocket.style.bottom =
                 "27%";
-
 
             createRound();
 
@@ -1123,30 +1033,24 @@ function createRound() {
         return;
     }
 
-
     canClickCloud = true;
-
 
     const data =
         rounds[
             currentRound
         ];
 
-
     const wrapper =
         document.createElement(
             "div"
         );
 
-
     wrapper.className =
         `cloud-wrapper ${data.side}`;
-
 
     wrapper.style.animationDuration =
         CLOUD_DURATION +
         "s";
-
 
     wrapper.innerHTML = `
 
@@ -1165,15 +1069,12 @@ function createRound() {
 
     `;
 
-
     game.appendChild(
         wrapper
     );
 
-
     currentCloud =
         wrapper;
-
 
     wrapper.addEventListener(
         "click",
@@ -1186,7 +1087,6 @@ function createRound() {
 
         }
     );
-
 
     wrapper.addEventListener(
         "animationend",
@@ -1203,10 +1103,8 @@ function createRound() {
 
                 wrapper.remove();
 
-
                 currentCloud =
                     null;
-
 
                 setTimeout(
                     createRound,
@@ -1235,19 +1133,15 @@ function chooseCloud(
         return;
     }
 
-
     canClickCloud = false;
-
 
     cloud.classList.add(
         "correct"
     );
 
-
     moveRocketTo(
         side
     );
-
 
     setTimeout(
         () => {
@@ -1261,9 +1155,7 @@ function chooseCloud(
         550
     );
 
-
     currentRound++;
-
 
     setTimeout(
         createRound,
@@ -1281,48 +1173,32 @@ function moveRocketTo(side) {
     currentRocketSide =
         side;
 
-
     if (side === "left") {
 
         rocket.style.left =
             "25%";
 
-
         rocket.style.transform =
             "translateX(-50%) rotate(-7deg)";
     }
-
 
     if (side === "center") {
 
         rocket.style.left =
             "50%";
 
-
         rocket.style.transform =
             "translateX(-50%) rotate(0deg)";
     }
-
 
     if (side === "right") {
 
         rocket.style.left =
             "75%";
 
-
         rocket.style.transform =
             "translateX(-50%) rotate(7deg)";
     }
-
-
-    /*
-       Ракета заканчивает
-       манёвр и снова
-       выравнивается.
-
-       На новой траектории
-       она остаётся.
-    */
 
     setTimeout(
         () => {
@@ -1346,20 +1222,11 @@ function startSpaceSequence() {
         return;
     }
 
-
     finishing = true;
-
 
     game.classList.add(
         "space-mode"
     );
-
-
-    /*
-       Перед выходом
-       в космос ракета
-       возвращается к центру.
-    */
 
     setTimeout(
         () => {
@@ -1367,10 +1234,8 @@ function startSpaceSequence() {
             rocket.style.left =
                 "50%";
 
-
             rocket.style.transform =
                 "translateX(-50%) rotate(0deg)";
-
 
             rocket.style.bottom =
                 "46%";
@@ -1378,11 +1243,6 @@ function startSpaceSequence() {
         },
         700
     );
-
-
-    /*
-       Надпись
-    */
 
     setTimeout(
         () => {
@@ -1395,11 +1255,6 @@ function startSpaceSequence() {
         2500
     );
 
-
-    /*
-       Финальный улёт
-    */
-
     setTimeout(
         () => {
 
@@ -1410,7 +1265,6 @@ function startSpaceSequence() {
                 "left 1.2s ease, " +
 
                 "transform .7s ease";
-
 
             rocket.style.bottom =
                 "115%";
