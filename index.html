@@ -3,44 +3,41 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Полёт ракеты</title>
 
 <style>
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
 html,
-body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    font-family: Arial, sans-serif;
-    user-select: none;
-    background: #74d2ff;
+body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    font-family:Arial,sans-serif;
+    user-select:none;
+    background:#74d2ff;
 }
 
-#game {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    background: #75d3ff;
+#game{
+    position:relative;
+    width:100vw;
+    height:100vh;
+    overflow:hidden;
+    background:#75d3ff;
 }
-
 
 /* =====================================================
    ВЫСОКОЕ НЕБО
 ===================================================== */
 
-#sky {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
+#sky{
+    position:absolute;
+    inset:0;
+    z-index:0;
 
     background:
         linear-gradient(
@@ -52,28 +49,22 @@ body {
         );
 }
 
-
 /* =====================================================
    ПРОМЕЖУТОЧНОЕ НЕБО
 ===================================================== */
 
-#transitionSky {
-    position: absolute;
+#transitionSky{
+    position:absolute;
+    left:0;
+    top:-5%;
+    width:100%;
+    height:125%;
 
-    left: 0;
-    top: -5%;
-
-    width: 100%;
-    height: 125%;
-
-    z-index: 2;
-
-    pointer-events: none;
-
-    opacity: 0;
+    z-index:2;
+    pointer-events:none;
+    opacity:0;
 
     background:
-
         radial-gradient(
             ellipse at 12% 63%,
             rgba(255,255,255,.88) 0%,
@@ -81,28 +72,24 @@ body {
             rgba(255,255,255,.22) 23%,
             transparent 35%
         ),
-
         radial-gradient(
             ellipse at 31% 55%,
             rgba(255,255,255,.75) 0%,
             rgba(255,255,255,.38) 14%,
             transparent 31%
         ),
-
         radial-gradient(
             ellipse at 62% 60%,
             rgba(255,255,255,.70) 0%,
             rgba(255,255,255,.34) 15%,
             transparent 32%
         ),
-
         radial-gradient(
             ellipse at 86% 53%,
             rgba(255,255,255,.86) 0%,
             rgba(255,255,255,.48) 14%,
             transparent 34%
         ),
-
         linear-gradient(
             to bottom,
             rgba(88,190,247,.25) 0%,
@@ -111,97 +98,59 @@ body {
             rgba(181,236,255,.88) 100%
         );
 
-    filter: blur(1px);
-
-    transition:
-        opacity 1.6s ease;
+    transition:opacity 1.6s ease;
 }
 
-#game.flying #transitionSky {
-    opacity: 1;
-
-    animation:
-        transitionMove
-        8s
-        linear
-        forwards;
+#game.flying #transitionSky{
+    opacity:1;
+    animation:transitionMove 8s linear forwards;
 }
 
-@keyframes transitionMove {
-
-    from {
-        transform:
-            translateY(-4%);
+@keyframes transitionMove{
+    from{
+        transform:translateY(-4%);
     }
-
-    to {
-        transform:
-            translateY(36%);
+    to{
+        transform:translateY(36%);
     }
 }
-
 
 /* =====================================================
    АЭРОДРОМ
 ===================================================== */
 
-#airport {
-    position: absolute;
+#airport{
+    position:absolute;
+    inset:0;
+    z-index:4;
 
-    inset: 0;
+    background-image:url("fon.png");
+    background-size:cover;
+    background-position:center center;
+    background-repeat:no-repeat;
 
-    z-index: 4;
-
-    background-image:
-        url("fon.png");
-
-    background-size:
-        cover;
-
-    background-position:
-        center center;
-
-    background-repeat:
-        no-repeat;
-
-    transform:
-        translateY(0)
-        scale(1);
-
-    opacity: 1;
+    transform:translateY(0) scale(1);
+    opacity:1;
 
     transition:
         transform 5.2s cubic-bezier(.20,.64,.23,1),
         opacity 4.7s ease;
 }
 
+#airportFade{
+    position:absolute;
+    left:0;
+    bottom:0;
+    width:100%;
+    height:34%;
 
-/*
-   Важно:
-   теперь сам аэродром не маскируем.
-   Вместо этого поверх нижней части
-   появляется прозрачная дымка.
-*/
-
-#airportFade {
-    position: absolute;
-
-    left: 0;
-    bottom: 0;
-
-    width: 100%;
-    height: 34%;
-
-    z-index: 5;
-
-    pointer-events: none;
-
-    opacity: 0;
+    z-index:5;
+    pointer-events:none;
+    opacity:0;
 
     background:
         linear-gradient(
             to top,
-
             rgba(160,228,255,1) 0%,
             rgba(146,222,255,.87) 16%,
             rgba(132,216,255,.62) 34%,
@@ -210,106 +159,186 @@ body {
             transparent 100%
         );
 
-    transition:
-        opacity 1.2s ease;
+    transition:opacity 1.2s ease;
 }
 
-
-#game.flying #airport {
-    transform:
-        translateY(112%)
-        scale(1.07);
-
-    opacity: 0;
+#game.flying #airport{
+    transform:translateY(112%) scale(1.07);
+    opacity:0;
 }
 
-#game.flying #airportFade {
-    opacity: 1;
+#game.flying #airportFade{
+    opacity:1;
 }
-
 
 /* =====================================================
-   ДВИЖЕНИЕ ВОЗДУХА
+   ДВИЖЕНИЕ НЕБА
 ===================================================== */
 
-#skyTexture {
+#skyTexture{
+    position:absolute;
+    left:0;
+    top:-40%;
+    width:100%;
+    height:180%;
 
-    position: absolute;
-
-    left: 0;
-    top: -40%;
-
-    width: 100%;
-    height: 180%;
-
-    z-index: 3;
-
-    pointer-events: none;
-
-    opacity: 0;
+    z-index:3;
+    pointer-events:none;
+    opacity:0;
 
     background:
-
         radial-gradient(
             circle at 15% 20%,
             rgba(255,255,255,.18) 0 2px,
             transparent 3px
         ),
-
         radial-gradient(
             circle at 80% 35%,
             rgba(255,255,255,.15) 0 2px,
             transparent 3px
         );
 
-    background-size:
-        190px 230px;
+    background-size:190px 230px;
+
+    transition:opacity 1.5s ease;
+}
+
+#game.flying #skyTexture{
+    opacity:1;
+    animation:skyMove 6s linear infinite;
+}
+
+@keyframes skyMove{
+    from{
+        transform:translateY(-120px);
+    }
+    to{
+        transform:translateY(250px);
+    }
+}
+
+/* =====================================================
+   КОСМОС
+===================================================== */
+
+#space{
+    position:absolute;
+    inset:0;
+    z-index:8;
+
+    pointer-events:none;
+    opacity:0;
+
+    background-image:url("kosmos.png");
+    background-size:cover;
+    background-position:center center;
+    background-repeat:no-repeat;
+
+    transform:scale(1.03);
 
     transition:
-        opacity 1.5s ease;
+        opacity 3.2s ease,
+        transform 6s ease;
 }
 
+#game.space-mode #space{
+    opacity:1;
+    transform:scale(1);
+}
 
-#game.flying #skyTexture {
+/* лёгкая затемняющая дымка при входе в космос */
 
-    opacity: 1;
+#spaceFade{
+    position:absolute;
+    inset:0;
+    z-index:9;
+
+    pointer-events:none;
+    opacity:0;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(9,20,55,.05) 0%,
+            rgba(7,15,42,.20) 35%,
+            rgba(4,8,28,.45) 70%,
+            rgba(2,4,16,.70) 100%
+        );
+
+    transition:opacity 2.5s ease;
+}
+
+#game.space-mode #spaceFade{
+    opacity:.42;
+}
+
+/* =====================================================
+   МЕРЦАЮЩИЕ ЗВЁЗДЫ
+===================================================== */
+
+#stars{
+    position:absolute;
+    inset:0;
+    z-index:11;
+
+    pointer-events:none;
+    opacity:0;
+
+    transition:opacity 2.5s ease;
+}
+
+#game.space-mode #stars{
+    opacity:1;
+}
+
+.star{
+    position:absolute;
+    border-radius:50%;
+    background:white;
+
+    box-shadow:
+        0 0 5px rgba(255,255,255,.9),
+        0 0 10px rgba(140,190,255,.7);
 
     animation:
-        skyMove
-        6s
-        linear
-        infinite;
+        twinkle 1.8s ease-in-out infinite alternate;
 }
 
-
-@keyframes skyMove {
-
-    from {
-        transform:
-            translateY(-120px);
-    }
-
-    to {
-        transform:
-            translateY(250px);
-    }
+.star.big{
+    box-shadow:
+        0 0 6px white,
+        0 0 14px rgba(120,180,255,.9),
+        0 0 25px rgba(120,160,255,.45);
 }
 
+@keyframes twinkle{
+    0%{
+        opacity:.25;
+        transform:scale(.7);
+    }
+
+    50%{
+        opacity:1;
+        transform:scale(1.15);
+    }
+
+    100%{
+        opacity:.45;
+        transform:scale(.85);
+    }
+}
 
 /* =====================================================
    РАКЕТА
 ===================================================== */
 
-#rocket {
+#rocket{
+    position:absolute;
 
-    position: absolute;
+    left:50%;
+    bottom:27.5%;
 
-    left: 50%;
-
-    bottom: 27%;
-
-    transform:
-        translateX(-50%);
+    transform:translateX(-50%);
 
     width:
         clamp(
@@ -318,86 +347,58 @@ body {
             225px
         );
 
-    z-index: 30;
-
-    cursor: pointer;
+    z-index:30;
+    cursor:pointer;
 
     transition:
-
-        left
-        1.15s
-        cubic-bezier(.22,.75,.3,1),
-
-        bottom
-        2.8s
-        cubic-bezier(.22,.75,.3,1),
-
-        transform
-        .55s
-        ease;
+        left 1.15s cubic-bezier(.22,.75,.3,1),
+        bottom 2.8s cubic-bezier(.22,.75,.3,1),
+        transform .55s ease;
 }
 
-
-#rocketImage {
-
-    display: block;
-
-    position: relative;
-
-    width: 100%;
-    height: auto;
-
-    z-index: 3;
-
-    pointer-events: none;
+#rocketImage{
+    display:block;
+    position:relative;
+    width:100%;
+    height:auto;
+    z-index:3;
+    pointer-events:none;
 }
-
 
 /* =====================================================
    ОГОНЬ
 ===================================================== */
 
-#fire {
+#fire{
+    position:absolute;
 
-    position: absolute;
+    left:50%;
+    top:84%;
 
-    left: 50%;
+    transform:translateX(-50%);
 
-    top: 84%;
+    width:57%;
 
-    transform:
-        translateX(-50%);
-
-    width: 57%;
-
-    z-index: 1;
-
-    opacity: 0;
-
-    pointer-events: none;
+    z-index:1;
+    opacity:0;
+    pointer-events:none;
 }
 
-
-#fire img {
-
-    display: block;
-
-    width: 100%;
-    height: auto;
+#fire img{
+    display:block;
+    width:100%;
+    height:auto;
 }
 
-
-#game.engine-on #fire {
-    opacity: 1;
+#game.engine-on #fire{
+    opacity:1;
 }
-
 
 /* =====================================================
-   ПОКАЧИВАНИЕ РАКЕТЫ
+   ПОКАЧИВАНИЕ
 ===================================================== */
 
-#game.flying #rocket {
-
+#game.flying #rocket{
     animation:
         rocketFloat
         .72s
@@ -406,49 +407,35 @@ body {
         alternate;
 }
 
-
-@keyframes rocketFloat {
-
-    from {
-        margin-top: -3px;
+@keyframes rocketFloat{
+    from{
+        margin-top:-3px;
     }
-
-    to {
-        margin-top: 3px;
+    to{
+        margin-top:3px;
     }
 }
-
 
 /* =====================================================
    СТАРТОВАЯ НАДПИСЬ
 ===================================================== */
 
-#startText {
+#startText{
+    position:absolute;
+    left:50%;
+    top:7%;
 
-    position: absolute;
+    transform:translateX(-50%);
 
-    left: 50%;
-    top: 7%;
+    z-index:50;
 
-    transform:
-        translateX(-50%);
+    padding:15px 30px;
+    border-radius:40px;
 
-    z-index: 50;
+    background:rgba(255,255,255,.90);
+    backdrop-filter:blur(7px);
 
-    padding:
-        15px 30px;
-
-    border-radius:
-        40px;
-
-    background:
-        rgba(255,255,255,.90);
-
-    backdrop-filter:
-        blur(7px);
-
-    color:
-        #244e6c;
+    color:#244e6c;
 
     font-size:
         clamp(
@@ -457,8 +444,7 @@ body {
             31px
         );
 
-    font-weight:
-        800;
+    font-weight:800;
 
     box-shadow:
         0 6px 18px
@@ -469,33 +455,28 @@ body {
         transform .5s ease;
 }
 
-
-#startText.hidden {
-
-    opacity: 0;
+#startText.hidden{
+    opacity:0;
 
     transform:
         translateX(-50%)
         translateY(-25px);
 
-    pointer-events: none;
+    pointer-events:none;
 }
-
 
 /* =====================================================
    ОБЛАКА
 ===================================================== */
 
-.cloud-wrapper {
+.cloud-wrapper{
+    position:absolute;
+    top:-180px;
 
-    position: absolute;
+    width:220px;
+    height:130px;
 
-    top: -180px;
-
-    width: 220px;
-    height: 130px;
-
-    z-index: 20;
+    z-index:20;
 
     animation:
         cloudDown
@@ -504,34 +485,24 @@ body {
         forwards;
 }
 
-
-.cloud-wrapper.left {
-    left: 7%;
+.cloud-wrapper.left{
+    left:7%;
 }
 
-
-.cloud-wrapper.center {
-
-    left: 50%;
-
-    margin-left:
-        -110px;
+.cloud-wrapper.center{
+    left:50%;
+    margin-left:-110px;
 }
 
-
-.cloud-wrapper.right {
-    right: 7%;
+.cloud-wrapper.right{
+    right:7%;
 }
 
-
-.cloud {
-
-    position: relative;
-
-    width: 100%;
-    height: 100%;
-
-    cursor: pointer;
+.cloud{
+    position:relative;
+    width:100%;
+    height:100%;
+    cursor:pointer;
 
     filter:
         drop-shadow(
@@ -540,117 +511,87 @@ body {
         );
 }
 
+.cloud-shape{
+    position:absolute;
 
-.cloud-shape {
+    left:10px;
+    bottom:7px;
 
-    position: absolute;
+    width:200px;
+    height:70px;
 
-    left: 10px;
-    bottom: 7px;
-
-    width: 200px;
-    height: 70px;
-
-    background:
-        white;
-
-    border-radius:
-        60px;
+    background:white;
+    border-radius:60px;
 }
 
+.cloud-shape::before{
+    content:"";
 
-.cloud-shape::before {
+    position:absolute;
 
-    content: "";
+    width:92px;
+    height:92px;
 
-    position: absolute;
+    left:30px;
+    top:-44px;
 
-    width: 92px;
-    height: 92px;
-
-    left: 30px;
-    top: -44px;
-
-    border-radius:
-        50%;
-
-    background:
-        white;
+    border-radius:50%;
+    background:white;
 }
 
+.cloud-shape::after{
+    content:"";
 
-.cloud-shape::after {
+    position:absolute;
 
-    content: "";
+    width:108px;
+    height:108px;
 
-    position: absolute;
+    right:19px;
+    top:-59px;
 
-    width: 108px;
-    height: 108px;
-
-    right: 19px;
-    top: -59px;
-
-    border-radius:
-        50%;
-
-    background:
-        white;
+    border-radius:50%;
+    background:white;
 }
 
+.word-card{
+    position:absolute;
 
-.word-card {
+    left:50%;
+    top:43%;
 
-    position: absolute;
+    transform:translate(-50%, -50%);
 
-    left: 50%;
-    top: 43%;
+    z-index:5;
 
-    transform:
-        translate(-50%, -50%);
+    width:72px;
+    height:72px;
 
-    z-index: 5;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-    width: 72px;
-    height: 72px;
+    border-radius:50%;
 
-    display: flex;
+    background:#ffd847;
+    border:5px solid white;
 
-    align-items: center;
-    justify-content: center;
+    color:#425b76;
 
-    border-radius:
-        50%;
-
-    background:
-        #ffd847;
-
-    border:
-        5px solid white;
-
-    color:
-        #425b76;
-
-    font-size:
-        40px;
-
-    font-weight:
-        900;
+    font-size:40px;
+    font-weight:900;
 
     box-shadow:
         0 4px 12px
         rgba(0,0,0,.15);
 }
 
-
-@keyframes cloudDown {
-
-    from {
-        transform:
-            translateY(0);
+@keyframes cloudDown{
+    from{
+        transform:translateY(0);
     }
 
-    to {
+    to{
         transform:
             translateY(
                 calc(100vh + 240px)
@@ -658,11 +599,8 @@ body {
     }
 }
 
-
-.cloud-wrapper.correct {
-
-    pointer-events:
-        none;
+.cloud-wrapper.correct{
+    pointer-events:none;
 
     animation:
         cloudOut
@@ -671,124 +609,33 @@ body {
         forwards;
 }
 
-
-@keyframes cloudOut {
-
-    to {
-
-        opacity: 0;
-
-        transform:
-            scale(1.15);
+@keyframes cloudOut{
+    to{
+        opacity:0;
+        transform:scale(1.15);
     }
 }
-
-
-/* =====================================================
-   КОСМОС
-===================================================== */
-
-#space {
-
-    position: absolute;
-
-    inset: 0;
-
-    z-index: 6;
-
-    pointer-events: none;
-
-    opacity: 0;
-
-    transition:
-        opacity
-        2.8s
-        ease;
-
-    background:
-
-        radial-gradient(
-            circle at 15% 20%,
-            white 0 2px,
-            transparent 3px
-        ),
-
-        radial-gradient(
-            circle at 75% 18%,
-            white 0 1.5px,
-            transparent 2.5px
-        ),
-
-        radial-gradient(
-            circle at 42% 38%,
-            white 0 2px,
-            transparent 3px
-        ),
-
-        radial-gradient(
-            circle at 82% 55%,
-            white 0 2px,
-            transparent 3px
-        ),
-
-        radial-gradient(
-            circle at 22% 70%,
-            white 0 1.5px,
-            transparent 2.5px
-        ),
-
-        radial-gradient(
-            circle at 65% 82%,
-            white 0 2px,
-            transparent 3px
-        ),
-
-        linear-gradient(
-            to bottom,
-            #162656,
-            #090f32 55%,
-            #020513
-        );
-
-    background-size:
-
-        250px 250px,
-        310px 310px,
-        190px 190px,
-        280px 280px,
-        230px 230px,
-        340px 340px,
-        auto;
-}
-
-
-#game.space-mode #space {
-    opacity: 1;
-}
-
 
 /* =====================================================
    ФИНАЛ
 ===================================================== */
 
-#finishText {
+#finishText{
+    position:absolute;
 
-    position: absolute;
-
-    left: 50%;
-    top: 13%;
+    left:50%;
+    top:13%;
 
     transform:
         translate(-50%, -20px)
         scale(.9);
 
-    z-index: 60;
+    z-index:60;
 
-    opacity: 0;
+    opacity:0;
 
-    color: white;
-
-    text-align: center;
+    color:white;
+    text-align:center;
 
     font-size:
         clamp(
@@ -797,8 +644,7 @@ body {
             58px
         );
 
-    font-weight:
-        900;
+    font-weight:900;
 
     text-shadow:
         0 4px 14px
@@ -809,25 +655,21 @@ body {
         transform .8s ease;
 }
 
-
-#finishText.show {
-
-    opacity: 1;
+#finishText.show{
+    opacity:1;
 
     transform:
         translate(-50%, 0)
         scale(1);
 }
 
-
 /* =====================================================
    МОБИЛЬНАЯ АДАПТАЦИЯ
 ===================================================== */
 
-@media (max-width: 700px) {
+@media (max-width:700px){
 
-    #rocket {
-
+    #rocket{
         width:
             clamp(
                 130px,
@@ -835,41 +677,26 @@ body {
                 175px
             );
 
-        bottom:
-            26.5%;
+        bottom:27%;
     }
 
-
-    .cloud-wrapper {
-
-        width:
-            170px;
-
-        height:
-            105px;
+    .cloud-wrapper{
+        width:170px;
+        height:105px;
     }
 
-
-    .cloud {
-
-        transform:
-            scale(.78);
-
-        transform-origin:
-            top left;
+    .cloud{
+        transform:scale(.78);
+        transform-origin:top left;
     }
 
-
-    .cloud-wrapper.center {
-
-        margin-left:
-            -85px;
+    .cloud-wrapper.center{
+        margin-left:-85px;
     }
 }
 
 </style>
 </head>
-
 
 <body>
 
@@ -887,24 +714,23 @@ body {
 
     <div id="space"></div>
 
+    <div id="spaceFade"></div>
+
+    <div id="stars"></div>
 
     <div id="startText">
         🚀 Нажми на ракету!
     </div>
 
-
     <div id="rocket">
 
         <div id="fire">
-
             <img
                 id="fireImage"
                 src="fire1.png"
                 alt=""
             >
-
         </div>
-
 
         <img
             id="rocketImage"
@@ -913,7 +739,6 @@ body {
         >
 
     </div>
-
 
     <div id="finishText">
         Мы в космосе! 🚀✨
@@ -925,23 +750,19 @@ body {
 <script>
 
 /* =====================================================
-   КАДРЫ ОГНЯ
+   ОГОНЬ
 ===================================================== */
 
 const fireFrames = [
-
     "fire1.png",
     "fire2.png",
     "fire3.png",
     "fire4.png",
     "fire5.png",
     "fire6.png"
-
 ];
 
-
 let fireFrameIndex = 0;
-
 let fireTimer = null;
 
 
@@ -952,40 +773,38 @@ let fireTimer = null;
 const rounds = [
 
     {
-        side: "left",
-        text: "Р"
+        side:"left",
+        text:"Р"
     },
 
     {
-        side: "center",
-        text: "Р"
+        side:"center",
+        text:"Р"
     },
 
     {
-        side: "right",
-        text: "Р"
+        side:"right",
+        text:"Р"
     },
 
     {
-        side: "left",
-        text: "Р"
+        side:"left",
+        text:"Р"
     },
 
     {
-        side: "right",
-        text: "Р"
+        side:"right",
+        text:"Р"
     },
 
     {
-        side: "center",
-        text: "Р"
+        side:"center",
+        text:"Р"
     }
 
 ];
 
-
 const CLOUD_DURATION = 10;
-
 const NEXT_ROUND_DELAY = 1200;
 
 
@@ -1008,32 +827,80 @@ const startText =
 const finishText =
     document.getElementById("finishText");
 
+const stars =
+    document.getElementById("stars");
+
 
 /* =====================================================
    СОСТОЯНИЕ
 ===================================================== */
 
 let gameStarted = false;
-
 let currentRound = 0;
-
 let currentCloud = null;
-
 let canClickCloud = false;
-
 let finishing = false;
-
-let currentRocketSide =
-    "center";
+let currentRocketSide = "center";
 
 
 /* =====================================================
-   ОГОНЬ
+   СОЗДАЁМ ЗВЁЗДЫ
 ===================================================== */
 
-function startFireAnimation() {
+function createStars(){
 
-    if (fireTimer) {
+    const amount = 45;
+
+    for(let i = 0; i < amount; i++){
+
+        const star =
+            document.createElement("div");
+
+        star.className = "star";
+
+        if(Math.random() > .82){
+            star.classList.add("big");
+        }
+
+        const size =
+            Math.random() * 3 + 1.5;
+
+        star.style.width =
+            size + "px";
+
+        star.style.height =
+            size + "px";
+
+        star.style.left =
+            Math.random() * 100 + "%";
+
+        star.style.top =
+            Math.random() * 100 + "%";
+
+        star.style.animationDuration =
+            (
+                Math.random() * 2 + 1.2
+            ) + "s";
+
+        star.style.animationDelay =
+            (
+                Math.random() * 2
+            ) + "s";
+
+        stars.appendChild(star);
+    }
+}
+
+createStars();
+
+
+/* =====================================================
+   АНИМАЦИЯ ОГНЯ
+===================================================== */
+
+function startFireAnimation(){
+
+    if(fireTimer){
         return;
     }
 
@@ -1050,11 +917,10 @@ function startFireAnimation() {
 
                 fireFrameIndex++;
 
-                if (
+                if(
                     fireFrameIndex >=
                     fireFrames.length
-                ) {
-
+                ){
                     fireFrameIndex = 0;
                 }
 
@@ -1078,10 +944,9 @@ rocket.addEventListener(
     startGame
 );
 
+function startGame(){
 
-function startGame() {
-
-    if (gameStarted) {
+    if(gameStarted){
         return;
     }
 
@@ -1125,12 +990,12 @@ function startGame() {
    СОЗДАНИЕ ОБЛАКА
 ===================================================== */
 
-function createRound() {
+function createRound(){
 
-    if (
+    if(
         currentRound >=
         rounds.length
-    ) {
+    ){
 
         startSpaceSequence();
 
@@ -1140,9 +1005,7 @@ function createRound() {
     canClickCloud = true;
 
     const data =
-        rounds[
-            currentRound
-        ];
+        rounds[currentRound];
 
     const wrapper =
         document.createElement(
@@ -1153,15 +1016,13 @@ function createRound() {
         `cloud-wrapper ${data.side}`;
 
     wrapper.style.animationDuration =
-        CLOUD_DURATION +
-        "s";
+        CLOUD_DURATION + "s";
 
     wrapper.innerHTML = `
 
         <div class="cloud">
 
-            <div class="cloud-shape">
-            </div>
+            <div class="cloud-shape"></div>
 
             <div class="word-card">
                 ${data.text}
@@ -1171,12 +1032,9 @@ function createRound() {
 
     `;
 
-    game.appendChild(
-        wrapper
-    );
+    game.appendChild(wrapper);
 
-    currentCloud =
-        wrapper;
+    currentCloud = wrapper;
 
     wrapper.addEventListener(
         "click",
@@ -1194,19 +1052,16 @@ function createRound() {
         "animationend",
         () => {
 
-            if (
-                wrapper ===
-                    currentCloud
-                &&
+            if(
+                wrapper === currentCloud &&
                 !wrapper.classList.contains(
                     "correct"
                 )
-            ) {
+            ){
 
                 wrapper.remove();
 
-                currentCloud =
-                    null;
+                currentCloud = null;
 
                 setTimeout(
                     createRound,
@@ -1225,12 +1080,12 @@ function createRound() {
 function chooseCloud(
     cloud,
     side
-) {
+){
 
-    if (
+    if(
         !canClickCloud ||
         finishing
-    ) {
+    ){
         return;
     }
 
@@ -1240,17 +1095,14 @@ function chooseCloud(
         "correct"
     );
 
-    moveRocketTo(
-        side
-    );
+    moveRocketTo(side);
 
     setTimeout(
         () => {
 
             cloud.remove();
 
-            currentCloud =
-                null;
+            currentCloud = null;
 
         },
         550
@@ -1269,12 +1121,11 @@ function chooseCloud(
    СМЕНА ТРАЕКТОРИИ
 ===================================================== */
 
-function moveRocketTo(side) {
+function moveRocketTo(side){
 
-    currentRocketSide =
-        side;
+    currentRocketSide = side;
 
-    if (side === "left") {
+    if(side === "left"){
 
         rocket.style.left =
             "25%";
@@ -1283,7 +1134,7 @@ function moveRocketTo(side) {
             "translateX(-50%) rotate(-7deg)";
     }
 
-    if (side === "center") {
+    if(side === "center"){
 
         rocket.style.left =
             "50%";
@@ -1292,7 +1143,7 @@ function moveRocketTo(side) {
             "translateX(-50%) rotate(0deg)";
     }
 
-    if (side === "right") {
+    if(side === "right"){
 
         rocket.style.left =
             "75%";
@@ -1314,36 +1165,65 @@ function moveRocketTo(side) {
 
 
 /* =====================================================
-   КОСМОС
+   ПЕРЕХОД В КОСМОС
 ===================================================== */
 
-function startSpaceSequence() {
+function startSpaceSequence(){
 
-    if (finishing) {
+    if(finishing){
         return;
     }
 
     finishing = true;
 
-    game.classList.add(
-        "space-mode"
-    );
+    /*
+       Сначала ракета идёт выше.
+    */
+
+    rocket.style.left =
+        "50%";
+
+    rocket.style.transform =
+        "translateX(-50%) rotate(0deg)";
+
+    rocket.style.bottom =
+        "42%";
+
+
+    /*
+       Космос появляется плавно.
+    */
 
     setTimeout(
         () => {
 
-            rocket.style.left =
-                "50%";
-
-            rocket.style.transform =
-                "translateX(-50%) rotate(0deg)";
-
-            rocket.style.bottom =
-                "46%";
+            game.classList.add(
+                "space-mode"
+            );
 
         },
-        700
+        500
     );
+
+
+    /*
+       Ракета продолжает набор высоты.
+    */
+
+    setTimeout(
+        () => {
+
+            rocket.style.bottom =
+                "50%";
+
+        },
+        2200
+    );
+
+
+    /*
+       Финальная надпись.
+    */
 
     setTimeout(
         () => {
@@ -1353,25 +1233,28 @@ function startSpaceSequence() {
             );
 
         },
-        2500
+        3500
     );
+
+
+    /*
+       Через некоторое время
+       ракета улетает дальше.
+    */
 
     setTimeout(
         () => {
 
             rocket.style.transition =
-
-                "bottom 3.2s ease-in, " +
-
+                "bottom 3.5s ease-in, " +
                 "left 1.2s ease, " +
-
                 "transform .7s ease";
 
             rocket.style.bottom =
-                "115%";
+                "118%";
 
         },
-        4200
+        5200
     );
 }
 
