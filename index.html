@@ -39,14 +39,13 @@ body {
     background:
         linear-gradient(
             to bottom,
-            #64c7ff 0%,
-            #8edcff 55%,
-            #d8f4ff 100%
+            #63c9ff 0%,
+            #8ddcff 55%,
+            #d9f4ff 100%
         );
 
     transition: background 2s ease;
 }
-
 
 /* =====================================================
    ДВИЖУЩИЙСЯ ФОН
@@ -57,17 +56,16 @@ body {
     inset: -50% 0 0 0;
     height: 200%;
     pointer-events: none;
-    opacity: 0.75;
 
     background:
         radial-gradient(
             circle at 15% 20%,
-            rgba(255,255,255,.22) 0 2px,
+            rgba(255,255,255,.25) 0 2px,
             transparent 3px
         ),
         radial-gradient(
             circle at 75% 40%,
-            rgba(255,255,255,.18) 0 2px,
+            rgba(255,255,255,.20) 0 2px,
             transparent 3px
         );
 
@@ -84,10 +82,9 @@ body {
     }
 
     to {
-        transform: translateY(220px);
+        transform: translateY(230px);
     }
 }
-
 
 /* =====================================================
    АЭРОДРОМ
@@ -99,14 +96,14 @@ body {
     bottom: 0;
 
     width: 100%;
-    height: 24%;
+    height: 25%;
 
     background:
         linear-gradient(
             to bottom,
-            #72b65e 0 28%,
-            #669f52 28% 35%,
-            #8c8c8c 35% 100%
+            #71b75f 0 28%,
+            #649f53 28% 35%,
+            #8b8c8d 35% 100%
         );
 
     transition:
@@ -119,9 +116,6 @@ body {
     opacity: 0;
 }
 
-
-/* взлётная полоса */
-
 #runway {
     position: absolute;
 
@@ -130,10 +124,10 @@ body {
 
     transform: translateX(-50%);
 
-    width: 28%;
-    height: 68%;
+    width: 30%;
+    height: 70%;
 
-    background: #62676b;
+    background: #606569;
 
     clip-path: polygon(
         40% 0,
@@ -162,7 +156,6 @@ body {
         );
 }
 
-
 /* =====================================================
    РАКЕТА
 ===================================================== */
@@ -171,7 +164,7 @@ body {
     position: absolute;
 
     left: 50%;
-    bottom: 11%;
+    bottom: 10%;
 
     width: 105px;
     height: 190px;
@@ -183,13 +176,10 @@ body {
     cursor: pointer;
 
     transition:
-        left 1.15s cubic-bezier(.22,.75,.3,1),
-        bottom 2.7s cubic-bezier(.22,.75,.3,1),
-        transform 1.15s ease;
+        left 1.2s cubic-bezier(.22,.8,.25,1),
+        bottom 2.6s cubic-bezier(.22,.8,.25,1),
+        transform .5s ease;
 }
-
-
-/* тело ракеты */
 
 .rocket-body {
     position: absolute;
@@ -213,9 +203,6 @@ body {
         inset -5px 0 8px rgba(0,0,0,.08),
         0 5px 12px rgba(0,0,0,.15);
 }
-
-
-/* нос */
 
 .rocket-body::before {
     content: "";
@@ -241,9 +228,6 @@ body {
     border-radius: 50% 50% 0 0;
 }
 
-
-/* окно */
-
 .window {
     position: absolute;
 
@@ -262,9 +246,6 @@ body {
     box-shadow:
         inset 3px 3px 5px rgba(255,255,255,.5);
 }
-
-
-/* плавники */
 
 .fin-left,
 .fin-right {
@@ -299,9 +280,6 @@ body {
         65% 25%
     );
 }
-
-
-/* огонь */
 
 #fire {
     position: absolute;
@@ -347,11 +325,10 @@ body {
     }
 }
 
-
-/* лёгкая вибрация ракеты */
+/* лёгкое покачивание */
 
 #game.flying #rocket {
-    animation: rocketFloat .7s ease-in-out infinite alternate;
+    animation: rocketFloat .75s ease-in-out infinite alternate;
 }
 
 @keyframes rocketFloat {
@@ -364,7 +341,6 @@ body {
     }
 }
 
-
 /* =====================================================
    СТАРТОВАЯ ПОДСКАЗКА
 ===================================================== */
@@ -372,7 +348,7 @@ body {
 #startText {
     position: absolute;
 
-    top: 9%;
+    top: 8%;
     left: 50%;
 
     transform: translateX(-50%);
@@ -407,18 +383,41 @@ body {
     pointer-events: none;
 }
 
-
 /* =====================================================
    ОБЛАКА
 ===================================================== */
 
-.cloud {
+.cloud-wrapper {
     position: absolute;
+
+    top: -180px;
 
     width: 210px;
     height: 125px;
 
     z-index: 20;
+
+    animation: cloudDown 10s linear forwards;
+}
+
+.cloud-wrapper.left {
+    left: 7%;
+}
+
+.cloud-wrapper.center {
+    left: 50%;
+    margin-left: -105px;
+}
+
+.cloud-wrapper.right {
+    right: 7%;
+}
+
+.cloud {
+    position: relative;
+
+    width: 210px;
+    height: 125px;
 
     cursor: pointer;
 
@@ -426,12 +425,7 @@ body {
         drop-shadow(
             0 8px 8px rgba(40,110,150,.12)
         );
-
-    animation: cloudDown 9s linear forwards;
 }
-
-
-/* форма облака */
 
 .cloud-shape {
     position: absolute;
@@ -479,8 +473,7 @@ body {
     border-radius: 50%;
 }
 
-
-/* временная карточка Р */
+/* временная карточка */
 
 .word-card {
     position: absolute;
@@ -513,6 +506,8 @@ body {
 
     box-shadow:
         0 5px 12px rgba(0,0,0,.15);
+
+    transition: transform .2s ease;
 }
 
 .cloud:hover .word-card {
@@ -521,40 +516,27 @@ body {
         scale(1.08);
 }
 
-
-/* облако движется сверху вниз */
-
 @keyframes cloudDown {
-
     from {
-        transform: translateY(-180px);
+        transform: translateY(0);
     }
 
     to {
-        transform: translateY(calc(100vh + 230px));
+        transform: translateY(calc(100vh + 250px));
     }
 }
 
-
-/* исчезновение после ответа */
-
-.cloud.correct {
+.cloud-wrapper.correct {
     pointer-events: none;
-
     animation: cloudDisappear .6s ease forwards;
 }
 
 @keyframes cloudDisappear {
-
     to {
         opacity: 0;
-
-        transform:
-            scale(1.15)
-            translateY(20px);
+        transform: scale(1.12);
     }
 }
-
 
 /* =====================================================
    КОСМОС
@@ -603,9 +585,8 @@ body {
     opacity: 1;
 }
 
-
 /* =====================================================
-   ФИНАЛЬНЫЙ ТЕКСТ
+   ФИНАЛ
 ===================================================== */
 
 #finishText {
@@ -643,22 +624,30 @@ body {
         scale(1);
 }
 
-
 /* =====================================================
-   АДАПТАЦИЯ
+   МОБИЛЬНАЯ АДАПТАЦИЯ
 ===================================================== */
 
 @media (max-width: 700px) {
 
     #rocket {
-        width: 85px;
         transform:
             translateX(-50%)
-            scale(.85);
+            scale(.86);
+    }
+
+    .cloud-wrapper {
+        width: 170px;
+        height: 110px;
     }
 
     .cloud {
-        transform-origin: center;
+        transform: scale(.82);
+        transform-origin: top left;
+    }
+
+    .cloud-wrapper.center {
+        margin-left: -85px;
     }
 }
 
@@ -669,28 +658,18 @@ body {
 
 <div id="game">
 
-    <!-- звёздный космос -->
     <div id="space"></div>
 
-    <!-- лёгкое движение неба -->
     <div id="skyLayer"></div>
 
-
-    <!-- старт -->
     <div id="startText">
         🚀 Нажми на ракету!
     </div>
 
-
-    <!-- аэродром -->
     <div id="ground">
-
         <div id="runway"></div>
-
     </div>
 
-
-    <!-- ракета -->
     <div id="rocket">
 
         <div class="fin-left"></div>
@@ -704,24 +683,17 @@ body {
 
     </div>
 
-
-    <!-- финал -->
     <div id="finishText">
         Мы в космосе! 🚀✨
     </div>
 
 </div>
 
-
 <script>
 
 /* =====================================================
-   НАСТРОЙКИ ИГРЫ
+   РАУНДЫ
 ===================================================== */
-
-/*
-   Здесь потом будем менять количество заданий.
-*/
 
 const rounds = [
 
@@ -731,6 +703,16 @@ const rounds = [
     },
 
     {
+        side: "center",
+        text: "Р"
+    },
+
+    {
+        side: "right",
+        text: "Р"
+    },
+
+    {
         side: "right",
         text: "Р"
     },
@@ -741,36 +723,19 @@ const rounds = [
     },
 
     {
-        side: "right",
-        text: "Р"
-    },
-
-    {
-        side: "left",
-        text: "Р"
-    },
-
-    {
-        side: "right",
+        side: "center",
         text: "Р"
     }
 
 ];
 
-
-/*
-   Скорость облака.
-   Чем больше число — тем медленнее облако.
-*/
+/* скорость облаков */
 
 const CLOUD_DURATION = 10;
 
+/* пауза между облаками */
 
-/*
-   Пауза между заданиями
-*/
-
-const NEXT_ROUND_DELAY = 1300;
+const NEXT_ROUND_DELAY = 1200;
 
 
 /* =====================================================
@@ -804,6 +769,8 @@ let canClickCloud = false;
 
 let finishing = false;
 
+let currentRocketSide = "center";
+
 
 /* =====================================================
    СТАРТ
@@ -813,7 +780,6 @@ rocket.addEventListener(
     "click",
     startGame
 );
-
 
 function startGame() {
 
@@ -825,19 +791,7 @@ function startGame() {
 
     startText.classList.add("hidden");
 
-
-    /*
-       Ракета поднимается
-       из аэропорта в рабочую позицию.
-    */
-
-    rocket.style.bottom = "28%";
-
-
-    /*
-       Через некоторое время
-       появляется первое облако.
-    */
+    rocket.style.bottom = "29%";
 
     setTimeout(
         () => {
@@ -849,7 +803,6 @@ function startGame() {
         },
         2600
     );
-
 }
 
 
@@ -859,120 +812,82 @@ function startGame() {
 
 function createRound() {
 
-    if (
-        currentRound >= rounds.length
-    ) {
+    if (currentRound >= rounds.length) {
 
         startSpaceSequence();
 
         return;
     }
 
-
     canClickCloud = true;
-
 
     const data =
         rounds[currentRound];
 
-
-    const cloud =
+    const wrapper =
         document.createElement("div");
 
+    wrapper.className =
+        `cloud-wrapper ${data.side}`;
 
-    cloud.className = "cloud";
-
-
-    /*
-       Слева или справа
-    */
-
-    if (data.side === "left") {
-
-        cloud.style.left =
-            "7%";
-
-    } else {
-
-        cloud.style.right =
-            "7%";
-
-    }
-
-
-    /*
-       скорость
-    */
-
-    cloud.style.animationDuration =
+    wrapper.style.animationDuration =
         CLOUD_DURATION + "s";
 
+    wrapper.innerHTML = `
 
-    cloud.innerHTML = `
+        <div class="cloud">
 
-        <div class="cloud-shape"></div>
+            <div class="cloud-shape"></div>
 
-        <div class="word-card">
-            ${data.text}
+            <div class="word-card">
+                ${data.text}
+            </div>
+
         </div>
 
     `;
 
+    game.appendChild(wrapper);
 
-    game.appendChild(cloud);
+    currentCloud = wrapper;
 
-    currentCloud = cloud;
-
-
-    /*
-       Нажатие на картинку
-    */
-
-    cloud.addEventListener(
+    wrapper.addEventListener(
         "click",
         () => {
 
             chooseCloud(
-                cloud,
+                wrapper,
                 data.side
             );
 
         }
     );
 
-
-    /*
-       Если облако ушло вниз,
-       оно снова появится.
-       Ребёнок не потеряет задание.
-    */
-
-    cloud.addEventListener(
+    wrapper.addEventListener(
         "animationend",
         () => {
 
             if (
-                cloud === currentCloud &&
-                !cloud.classList.contains("correct")
+                wrapper === currentCloud &&
+                !wrapper.classList.contains("correct")
             ) {
 
-                cloud.remove();
+                wrapper.remove();
+
+                currentCloud = null;
 
                 setTimeout(
                     createRound,
-                    350
+                    300
                 );
-
             }
-
         }
     );
-
 }
 
 
 /* =====================================================
-   ПРАВИЛЬНЫЙ ВЫБОР
+   НАЖАТИЕ НА ОБЛАКО
 ===================================================== */
 
 function chooseCloud(
@@ -985,63 +900,11 @@ function chooseCloud(
         finishing
     ) return;
 
-
     canClickCloud = false;
-
-
-    /*
-       Облако исчезает
-    */
 
     cloud.classList.add("correct");
 
-
-    /*
-       Ракета летит
-       в сторону картинки.
-    */
-
-    if (side === "left") {
-
-        rocket.style.left =
-            "38%";
-
-        rocket.style.transform =
-            "translateX(-50%) rotate(-7deg)";
-
-    } else {
-
-        rocket.style.left =
-            "62%";
-
-        rocket.style.transform =
-            "translateX(-50%) rotate(7deg)";
-
-    }
-
-
-    /*
-       Через секунду ракета
-       возвращается к центру.
-    */
-
-    setTimeout(
-        () => {
-
-            rocket.style.left =
-                "50%";
-
-            rocket.style.transform =
-                "translateX(-50%) rotate(0deg)";
-
-        },
-        950
-    );
-
-
-    /*
-       удаляем облако
-    */
+    moveRocketTo(side);
 
     setTimeout(
         () => {
@@ -1051,22 +914,65 @@ function chooseCloud(
             currentCloud = null;
 
         },
-        650
+        600
     );
 
-
-    /*
-       следующий раунд
-    */
-
     currentRound++;
-
 
     setTimeout(
         createRound,
         NEXT_ROUND_DELAY
     );
+}
 
+
+/* =====================================================
+   СМЕНА ТРАЕКТОРИИ
+===================================================== */
+
+function moveRocketTo(side) {
+
+    currentRocketSide = side;
+
+    if (side === "left") {
+
+        rocket.style.left = "25%";
+
+        rocket.style.transform =
+            "translateX(-50%) rotate(-7deg)";
+    }
+
+    if (side === "center") {
+
+        rocket.style.left = "50%";
+
+        rocket.style.transform =
+            "translateX(-50%) rotate(0deg)";
+    }
+
+    if (side === "right") {
+
+        rocket.style.left = "75%";
+
+        rocket.style.transform =
+            "translateX(-50%) rotate(7deg)";
+    }
+
+    /*
+       Через короткое время ракета
+       выпрямляется, но остаётся
+       на новой траектории.
+    */
+
+    setTimeout(
+        () => {
+
+            rocket.style.transform =
+                "translateX(-50%) rotate(0deg)";
+
+        },
+        900
+    );
 }
 
 
@@ -1080,34 +986,29 @@ function startSpaceSequence() {
 
     finishing = true;
 
-
-    /*
-       Небо постепенно становится космосом.
-    */
-
     game.classList.add(
         "space-mode"
     );
 
-
     /*
-       Ракета начинает подниматься.
+       Перед входом в космос
+       ракета плавно идёт в центр.
     */
 
     setTimeout(
         () => {
 
+            rocket.style.left = "50%";
+
+            rocket.style.transform =
+                "translateX(-50%) rotate(0deg)";
+
             rocket.style.bottom =
                 "48%";
 
         },
-        800
+        700
     );
-
-
-    /*
-       Финальный текст.
-    */
 
     setTimeout(
         () => {
@@ -1120,18 +1021,13 @@ function startSpaceSequence() {
         2500
     );
 
-
-    /*
-       Ракета улетает вверх.
-    */
-
     setTimeout(
         () => {
 
             rocket.style.transition =
                 "bottom 3.2s ease-in, " +
-                "left 1s ease, " +
-                "transform 1s ease";
+                "left 1.2s ease, " +
+                "transform .6s ease";
 
             rocket.style.bottom =
                 "115%";
@@ -1139,7 +1035,6 @@ function startSpaceSequence() {
         },
         4000
     );
-
 }
 
 </script>
