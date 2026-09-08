@@ -21,7 +21,7 @@ body {
     overflow: hidden;
     font-family: Arial, sans-serif;
     user-select: none;
-    background: #71cfff;
+    background: #74d2ff;
 }
 
 #game {
@@ -29,20 +29,12 @@ body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-
-    background:
-        linear-gradient(
-            to bottom,
-            #43b7fa 0%,
-            #70ceff 45%,
-            #a8e6ff 75%,
-            #d9f5ff 100%
-        );
+    background: #75d3ff;
 }
 
 
 /* =====================================================
-   НЕБО
+   ВЫСОКОЕ НЕБО
 ===================================================== */
 
 #sky {
@@ -54,10 +46,98 @@ body {
         linear-gradient(
             to bottom,
             #43b7fa 0%,
-            #69caff 45%,
-            #a5e4ff 75%,
-            #d9f5ff 100%
+            #62c7ff 38%,
+            #85d8ff 68%,
+            #b9edff 100%
         );
+}
+
+
+/* =====================================================
+   ПРОМЕЖУТОЧНОЕ НЕБО
+===================================================== */
+
+#transitionSky {
+    position: absolute;
+
+    left: 0;
+    top: -5%;
+
+    width: 100%;
+    height: 125%;
+
+    z-index: 2;
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    background:
+
+        radial-gradient(
+            ellipse at 12% 63%,
+            rgba(255,255,255,.88) 0%,
+            rgba(255,255,255,.62) 11%,
+            rgba(255,255,255,.22) 23%,
+            transparent 35%
+        ),
+
+        radial-gradient(
+            ellipse at 31% 55%,
+            rgba(255,255,255,.75) 0%,
+            rgba(255,255,255,.38) 14%,
+            transparent 31%
+        ),
+
+        radial-gradient(
+            ellipse at 62% 60%,
+            rgba(255,255,255,.70) 0%,
+            rgba(255,255,255,.34) 15%,
+            transparent 32%
+        ),
+
+        radial-gradient(
+            ellipse at 86% 53%,
+            rgba(255,255,255,.86) 0%,
+            rgba(255,255,255,.48) 14%,
+            transparent 34%
+        ),
+
+        linear-gradient(
+            to bottom,
+            rgba(88,190,247,.25) 0%,
+            rgba(102,201,250,.38) 35%,
+            rgba(133,218,255,.68) 70%,
+            rgba(181,236,255,.88) 100%
+        );
+
+    filter: blur(1px);
+
+    transition:
+        opacity 1.6s ease;
+}
+
+#game.flying #transitionSky {
+    opacity: 1;
+
+    animation:
+        transitionMove
+        8s
+        linear
+        forwards;
+}
+
+@keyframes transitionMove {
+
+    from {
+        transform:
+            translateY(-4%);
+    }
+
+    to {
+        transform:
+            translateY(36%);
+    }
 }
 
 
@@ -68,13 +148,9 @@ body {
 #airport {
     position: absolute;
 
-    left: 0;
-    top: 0;
+    inset: 0;
 
-    width: 100%;
-    height: 100%;
-
-    z-index: 3;
+    z-index: 4;
 
     background-image:
         url("fon.png");
@@ -88,63 +164,72 @@ body {
     background-repeat:
         no-repeat;
 
-    opacity: 1;
-
     transform:
         translateY(0)
         scale(1);
 
-    -webkit-mask-image:
+    opacity: 1;
+
+    transition:
+        transform 5.2s cubic-bezier(.20,.64,.23,1),
+        opacity 4.7s ease;
+}
+
+
+/*
+   Важно:
+   теперь сам аэродром не маскируем.
+   Вместо этого поверх нижней части
+   появляется прозрачная дымка.
+*/
+
+#airportFade {
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 34%;
+
+    z-index: 5;
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    background:
         linear-gradient(
-            to bottom,
+            to top,
 
-            #000 0%,
-            #000 62%,
-
-            rgba(0,0,0,1) 68%,
-            rgba(0,0,0,.96) 72%,
-            rgba(0,0,0,.85) 77%,
-            rgba(0,0,0,.68) 82%,
-            rgba(0,0,0,.48) 87%,
-            rgba(0,0,0,.28) 92%,
-            rgba(0,0,0,.10) 97%,
-            transparent 100%
-        );
-
-    mask-image:
-        linear-gradient(
-            to bottom,
-
-            #000 0%,
-            #000 62%,
-
-            rgba(0,0,0,1) 68%,
-            rgba(0,0,0,.96) 72%,
-            rgba(0,0,0,.85) 77%,
-            rgba(0,0,0,.68) 82%,
-            rgba(0,0,0,.48) 87%,
-            rgba(0,0,0,.28) 92%,
-            rgba(0,0,0,.10) 97%,
+            rgba(160,228,255,1) 0%,
+            rgba(146,222,255,.87) 16%,
+            rgba(132,216,255,.62) 34%,
+            rgba(120,208,255,.36) 54%,
+            rgba(111,202,255,.15) 73%,
             transparent 100%
         );
 
     transition:
-        transform 5s cubic-bezier(.20,.65,.25,1),
-        opacity 4.6s ease;
+        opacity 1.2s ease;
 }
 
-#game.flying #airport {
 
+#game.flying #airport {
     transform:
-        translateY(110%)
+        translateY(112%)
         scale(1.07);
 
     opacity: 0;
 }
 
+#game.flying #airportFade {
+    opacity: 1;
+}
+
 
 /* =====================================================
-   ДВИЖЕНИЕ НЕБА
+   ДВИЖЕНИЕ ВОЗДУХА
 ===================================================== */
 
 #skyTexture {
@@ -157,7 +242,7 @@ body {
     width: 100%;
     height: 180%;
 
-    z-index: 2;
+    z-index: 3;
 
     pointer-events: none;
 
@@ -184,6 +269,7 @@ body {
         opacity 1.5s ease;
 }
 
+
 #game.flying #skyTexture {
 
     opacity: 1;
@@ -194,6 +280,7 @@ body {
         linear
         infinite;
 }
+
 
 @keyframes skyMove {
 
@@ -219,7 +306,7 @@ body {
 
     left: 50%;
 
-    bottom: 25%;
+    bottom: 27%;
 
     transform:
         translateX(-50%);
@@ -249,6 +336,7 @@ body {
         .55s
         ease;
 }
+
 
 #rocketImage {
 
@@ -289,6 +377,7 @@ body {
     pointer-events: none;
 }
 
+
 #fire img {
 
     display: block;
@@ -297,8 +386,8 @@ body {
     height: auto;
 }
 
-#game.engine-on #fire {
 
+#game.engine-on #fire {
     opacity: 1;
 }
 
@@ -316,6 +405,7 @@ body {
         infinite
         alternate;
 }
+
 
 @keyframes rocketFloat {
 
@@ -379,6 +469,7 @@ body {
         transform .5s ease;
 }
 
+
 #startText.hidden {
 
     opacity: 0;
@@ -413,9 +504,11 @@ body {
         forwards;
 }
 
+
 .cloud-wrapper.left {
     left: 7%;
 }
+
 
 .cloud-wrapper.center {
 
@@ -425,9 +518,11 @@ body {
         -110px;
 }
 
+
 .cloud-wrapper.right {
     right: 7%;
 }
+
 
 .cloud {
 
@@ -445,6 +540,7 @@ body {
         );
 }
 
+
 .cloud-shape {
 
     position: absolute;
@@ -461,6 +557,7 @@ body {
     border-radius:
         60px;
 }
+
 
 .cloud-shape::before {
 
@@ -481,6 +578,7 @@ body {
         white;
 }
 
+
 .cloud-shape::after {
 
     content: "";
@@ -499,6 +597,7 @@ body {
     background:
         white;
 }
+
 
 .word-card {
 
@@ -543,22 +642,22 @@ body {
         rgba(0,0,0,.15);
 }
 
+
 @keyframes cloudDown {
 
     from {
-
         transform:
             translateY(0);
     }
 
     to {
-
         transform:
             translateY(
                 calc(100vh + 240px)
             );
     }
 }
+
 
 .cloud-wrapper.correct {
 
@@ -571,6 +670,7 @@ body {
         ease
         forwards;
 }
+
 
 @keyframes cloudOut {
 
@@ -594,7 +694,7 @@ body {
 
     inset: 0;
 
-    z-index: 5;
+    z-index: 6;
 
     pointer-events: none;
 
@@ -661,8 +761,8 @@ body {
         auto;
 }
 
-#game.space-mode #space {
 
+#game.space-mode #space {
     opacity: 1;
 }
 
@@ -709,6 +809,7 @@ body {
         transform .8s ease;
 }
 
+
 #finishText.show {
 
     opacity: 1;
@@ -735,8 +836,9 @@ body {
             );
 
         bottom:
-            24.5%;
+            26.5%;
     }
+
 
     .cloud-wrapper {
 
@@ -747,6 +849,7 @@ body {
             105px;
     }
 
+
     .cloud {
 
         transform:
@@ -755,6 +858,7 @@ body {
         transform-origin:
             top left;
     }
+
 
     .cloud-wrapper.center {
 
@@ -773,7 +877,11 @@ body {
 
     <div id="sky"></div>
 
+    <div id="transitionSky"></div>
+
     <div id="airport"></div>
+
+    <div id="airportFade"></div>
 
     <div id="skyTexture"></div>
 
@@ -888,18 +996,14 @@ const NEXT_ROUND_DELAY = 1200;
 const game =
     document.getElementById("game");
 
-
 const rocket =
     document.getElementById("rocket");
-
 
 const fireImage =
     document.getElementById("fireImage");
 
-
 const startText =
     document.getElementById("startText");
-
 
 const finishText =
     document.getElementById("finishText");
@@ -997,7 +1101,7 @@ function startGame() {
             );
 
             rocket.style.bottom =
-                "39%";
+                "41%";
 
         },
         500
@@ -1007,12 +1111,12 @@ function startGame() {
         () => {
 
             rocket.style.bottom =
-                "27%";
+                "28%";
 
             createRound();
 
         },
-        3400
+        3500
     );
 }
 
@@ -1060,9 +1164,7 @@ function createRound() {
             </div>
 
             <div class="word-card">
-
                 ${data.text}
-
             </div>
 
         </div>
@@ -1129,7 +1231,6 @@ function chooseCloud(
         !canClickCloud ||
         finishing
     ) {
-
         return;
     }
 
@@ -1213,7 +1314,7 @@ function moveRocketTo(side) {
 
 
 /* =====================================================
-   ПЕРЕХОД В КОСМОС
+   КОСМОС
 ===================================================== */
 
 function startSpaceSequence() {
