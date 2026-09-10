@@ -1,47 +1,121 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
 <title>Полёт ракеты</title>
 
+
+<!-- ШРИФТ NEUCHA -->
+
+<link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+>
+
+<link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Neucha&display=swap"
+    rel="stylesheet"
+>
+
+
 <style>
+
+
+/* =====================================================
+   ОСНОВА
+===================================================== */
 
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
+
+    -webkit-tap-highlight-color:
+        transparent;
 }
+
 
 html,
 body{
+
     width:100%;
     height:100%;
+
     overflow:hidden;
-    font-family:Arial,sans-serif;
+
+    font-family:
+        "Neucha",
+        cursive;
+
     user-select:none;
+    -webkit-user-select:none;
+
     background:#74d2ff;
 }
 
+
+button{
+
+    font-family:
+        "Neucha",
+        cursive;
+
+    -webkit-tap-highlight-color:
+        transparent;
+
+    outline:none;
+}
+
+
+button:focus,
+button:active{
+
+    outline:none;
+}
+
+
 #game{
+
     position:relative;
+
     width:100vw;
     height:100vh;
+
     overflow:hidden;
+
     background:#75d3ff;
 }
+
+
 
 /* =====================================================
    НЕБО
 ===================================================== */
 
 #sky{
+
     position:absolute;
+
     inset:0;
+
     z-index:0;
 
     background:
+
         linear-gradient(
             to bottom,
             #43b7fa 0%,
@@ -52,12 +126,15 @@ body{
 }
 
 
+
 /* =====================================================
    ПРОМЕЖУТОЧНОЕ НЕБО
 ===================================================== */
 
 #transitionSky{
+
     position:absolute;
+
     left:0;
     top:-5%;
 
@@ -67,6 +144,7 @@ body{
     z-index:2;
 
     pointer-events:none;
+
     opacity:0;
 
     background:
@@ -108,24 +186,38 @@ body{
             rgba(181,236,255,.88) 100%
         );
 
-    transition:opacity 1.6s ease;
+    transition:
+        opacity 1.6s ease;
 }
 
+
 #game.flying #transitionSky{
+
     opacity:1;
-    animation:transitionMove 8s linear forwards;
+
+    animation:
+        transitionMove
+        8s
+        linear
+        forwards;
 }
+
 
 @keyframes transitionMove{
 
     from{
-        transform:translateY(-4%);
+
+        transform:
+            translateY(-4%);
     }
 
     to{
-        transform:translateY(36%);
+
+        transform:
+            translateY(36%);
     }
 }
+
 
 
 /* =====================================================
@@ -133,15 +225,24 @@ body{
 ===================================================== */
 
 #airport{
+
     position:absolute;
+
     inset:0;
 
     z-index:4;
 
-    background-image:url("fon.png");
-    background-size:cover;
-    background-position:center center;
-    background-repeat:no-repeat;
+    background-image:
+        url("fon.png");
+
+    background-size:
+        cover;
+
+    background-position:
+        center center;
+
+    background-repeat:
+        no-repeat;
 
     transform:
         translateY(0)
@@ -150,12 +251,19 @@ body{
     opacity:1;
 
     transition:
-        transform 5.2s cubic-bezier(.20,.64,.23,1),
-        opacity 4.7s ease;
+
+        transform
+        5.2s
+        cubic-bezier(.20,.64,.23,1),
+
+        opacity
+        4.7s
+        ease;
 }
 
 
 #airportFade{
+
     position:absolute;
 
     left:0;
@@ -167,9 +275,11 @@ body{
     z-index:5;
 
     pointer-events:none;
+
     opacity:0;
 
     background:
+
         linear-gradient(
             to top,
             rgba(165,231,255,.96) 0%,
@@ -181,7 +291,8 @@ body{
             transparent 100%
         );
 
-    transition:opacity 1.5s ease;
+    transition:
+        opacity 1.5s ease;
 }
 
 
@@ -196,8 +307,10 @@ body{
 
 
 #game.flying #airportFade{
+
     opacity:1;
 }
+
 
 
 /* =====================================================
@@ -205,6 +318,7 @@ body{
 ===================================================== */
 
 #skyTexture{
+
     position:absolute;
 
     left:0;
@@ -216,6 +330,7 @@ body{
     z-index:3;
 
     pointer-events:none;
+
     opacity:0;
 
     background:
@@ -232,28 +347,41 @@ body{
             transparent 3px
         );
 
-    background-size:190px 230px;
+    background-size:
+        190px 230px;
 
-    transition:opacity 1.5s ease;
+    transition:
+        opacity 1.5s ease;
 }
 
 
 #game.flying #skyTexture{
+
     opacity:1;
-    animation:skyMove 6s linear infinite;
+
+    animation:
+        skyMove
+        6s
+        linear
+        infinite;
 }
 
 
 @keyframes skyMove{
 
     from{
-        transform:translateY(-120px);
+
+        transform:
+            translateY(-120px);
     }
 
     to{
-        transform:translateY(250px);
+
+        transform:
+            translateY(250px);
     }
 }
+
 
 
 /* =====================================================
@@ -261,7 +389,9 @@ body{
 ===================================================== */
 
 #menu{
+
     position:absolute;
+
     inset:0;
 
     z-index:100;
@@ -270,16 +400,26 @@ body{
         opacity .6s ease;
 }
 
+
 #menu.hidden{
+
     opacity:0;
+
     pointer-events:none;
 }
 
 
+
+/* =====================================================
+   ЗАГОЛОВОК
+===================================================== */
+
 #menuTitle{
+
     position:absolute;
 
     top:7%;
+
     left:50%;
 
     transform:
@@ -288,7 +428,8 @@ body{
     padding:
         14px 30px;
 
-    border-radius:35px;
+    border-radius:
+        35px;
 
     background:
         rgba(255,255,255,.91);
@@ -296,18 +437,28 @@ body{
     backdrop-filter:
         blur(8px);
 
-    color:#244e6c;
+    -webkit-backdrop-filter:
+        blur(8px);
+
+    color:
+        #244e6c;
+
+    font-family:
+        "Neucha",
+        cursive;
 
     font-size:
         clamp(
-            22px,
-            2.5vw,
-            34px
+            26px,
+            3vw,
+            42px
         );
 
-    font-weight:900;
+    font-weight:
+        400;
 
-    white-space:nowrap;
+    white-space:
+        nowrap;
 
     box-shadow:
         0 7px 22px
@@ -315,14 +466,17 @@ body{
 }
 
 
+
 /* =====================================================
    КНОПКИ ВЫБОРА
 ===================================================== */
 
 .modeButton{
+
     position:absolute;
 
     min-width:
+
         clamp(
             270px,
             29vw,
@@ -336,7 +490,8 @@ body{
         4px solid
         rgba(255,255,255,.92);
 
-    border-radius:28px;
+    border-radius:
+        28px;
 
     background:
         rgba(255,255,255,.84);
@@ -344,33 +499,60 @@ body{
     backdrop-filter:
         blur(9px);
 
-    color:#24587b;
+    -webkit-backdrop-filter:
+        blur(9px);
+
+    color:
+        #24587b;
+
+    font-family:
+        "Neucha",
+        cursive;
 
     font-size:
+
         clamp(
-            19px,
-            2vw,
-            30px
+            25px,
+            2.7vw,
+            39px
         );
 
-    font-weight:900;
+    font-weight:
+        400;
 
-    text-align:center;
+    text-align:
+        center;
 
-    cursor:pointer;
+    cursor:
+        pointer;
 
     box-shadow:
+
         0 9px 25px
         rgba(30,80,110,.22);
 
     transition:
-        transform .25s ease,
-        background .25s ease;
+
+        transform
+        .25s
+        ease,
+
+        background
+        .25s
+        ease;
+
+    -webkit-tap-highlight-color:
+        transparent;
+
+    outline:
+        none;
 }
 
 
 .modeButton:hover{
-    transform:scale(1.04);
+
+    transform:
+        scale(1.04);
 
     background:
         rgba(255,255,255,.96);
@@ -378,26 +560,38 @@ body{
 
 
 .modeButton:active{
-    transform:scale(.97);
+
+    transform:
+        scale(.97);
+
+    outline:
+        none;
 }
 
 
 #startMode{
+
     left:8%;
+
     top:28%;
 }
 
 
 #middleMode{
+
     right:8%;
+
     top:47%;
 }
 
 
 #endMode{
+
     left:8%;
+
     top:66%;
 }
+
 
 
 /* =====================================================
@@ -405,56 +599,87 @@ body{
 ===================================================== */
 
 #loading{
+
     position:absolute;
 
     left:50%;
+
     top:50%;
 
     transform:
+
         translate(-50%,-50%)
+
         scale(.95);
 
     z-index:120;
 
     padding:
-        18px 30px;
 
-    border-radius:30px;
+        18px
+        30px;
+
+    border-radius:
+        30px;
 
     background:
-        rgba(255,255,255,.94);
 
-    color:#24587b;
-
-    font-size:
-        clamp(
-            18px,
-            2vw,
-            27px
+        rgba(
+            255,
+            255,
+            255,
+            .94
         );
 
-    font-weight:900;
+    color:
+        #24587b;
+
+    font-family:
+        "Neucha",
+        cursive;
+
+    font-size:
+
+        clamp(
+            23px,
+            2.5vw,
+            35px
+        );
 
     box-shadow:
-        0 8px 25px
+
+        0
+        8px
+        25px
         rgba(0,0,0,.18);
 
     opacity:0;
+
     pointer-events:none;
 
     transition:
-        opacity .3s ease,
-        transform .3s ease;
+
+        opacity
+        .3s
+        ease,
+
+        transform
+        .3s
+        ease;
 }
 
 
 #loading.show{
+
     opacity:1;
 
     transform:
+
         translate(-50%,-50%)
+
         scale(1);
 }
+
 
 
 /* =====================================================
@@ -462,15 +687,18 @@ body{
 ===================================================== */
 
 #rocket{
+
     position:absolute;
 
     left:50%;
+
     bottom:27.5%;
 
     transform:
         translateX(-50%);
 
     width:
+
         clamp(
             155px,
             14vw,
@@ -482,28 +710,50 @@ body{
     cursor:pointer;
 
     opacity:0;
+
     pointer-events:none;
 
+    -webkit-tap-highlight-color:
+        transparent;
+
+    outline:none;
+
     transition:
-        opacity .55s ease,
-        left 1.15s cubic-bezier(.22,.75,.3,1),
-        bottom 2.8s cubic-bezier(.22,.75,.3,1),
-        transform .55s ease;
+
+        opacity
+        .55s
+        ease,
+
+        left
+        1.15s
+        cubic-bezier(.22,.75,.3,1),
+
+        bottom
+        2.8s
+        cubic-bezier(.22,.75,.3,1),
+
+        transform
+        .55s
+        ease;
 }
 
 
 #rocket.ready{
+
     opacity:1;
+
     pointer-events:auto;
 }
 
 
 #rocketImage{
+
     display:block;
 
     position:relative;
 
     width:100%;
+
     height:auto;
 
     z-index:3;
@@ -512,14 +762,17 @@ body{
 }
 
 
+
 /* =====================================================
    ОГОНЬ
 ===================================================== */
 
 #fire{
+
     position:absolute;
 
     left:50%;
+
     top:83%;
 
     transform:
@@ -530,28 +783,36 @@ body{
     z-index:1;
 
     opacity:0;
+
     pointer-events:none;
 }
 
 
 #fire img{
+
     display:block;
+
     width:100%;
+
     height:auto;
 }
 
 
 #game.engine-on #fire{
+
     opacity:1;
 }
 
 
+
 /* =====================================================
-   ПОКАЧИВАНИЕ
+   ПОКАЧИВАНИЕ РАКЕТЫ
 ===================================================== */
 
 #game.flying #rocket{
+
     animation:
+
         rocketFloat
         .72s
         ease-in-out
@@ -563,23 +824,28 @@ body{
 @keyframes rocketFloat{
 
     from{
+
         margin-top:-3px;
     }
 
     to{
+
         margin-top:3px;
     }
 }
 
 
+
 /* =====================================================
-   НАДПИСЬ ПЕРЕД СТАРТОМ
+   НАЖМИ НА РАКЕТУ
 ===================================================== */
 
 #startText{
+
     position:absolute;
 
     left:50%;
+
     top:7%;
 
     transform:
@@ -590,7 +856,8 @@ body{
     padding:
         15px 30px;
 
-    border-radius:40px;
+    border-radius:
+        40px;
 
     background:
         rgba(255,255,255,.90);
@@ -598,18 +865,29 @@ body{
     backdrop-filter:
         blur(7px);
 
-    color:#244e6c;
+    -webkit-backdrop-filter:
+        blur(7px);
+
+    color:
+        #244e6c;
+
+    font-family:
+        "Neucha",
+        cursive;
 
     font-size:
+
         clamp(
-            18px,
-            2.2vw,
-            31px
+            24px,
+            2.7vw,
+            39px
         );
 
-    font-weight:800;
+    font-weight:
+        400;
 
     box-shadow:
+
         0 6px 18px
         rgba(0,0,0,.13);
 
@@ -618,35 +896,48 @@ body{
     pointer-events:none;
 
     transition:
-        opacity .5s ease,
-        transform .5s ease;
+
+        opacity
+        .5s
+        ease,
+
+        transform
+        .5s
+        ease;
 }
 
 
 #startText.visible{
+
     opacity:1;
 }
 
 
 #startText.hidden{
+
     opacity:0;
 
     transform:
+
         translateX(-50%)
+
         translateY(-25px);
 }
 
 
+
 /* =====================================================
-   ГОТОВЫЕ ОБЛАКА PNG
+   ОБЛАКА
 ===================================================== */
 
 .cloud-wrapper{
+
     position:absolute;
 
     top:-260px;
 
     width:
+
         clamp(
             245px,
             24vw,
@@ -658,35 +949,85 @@ body{
     cursor:pointer;
 
     animation:
+
         cloudDown
         11s
         linear
         forwards;
 
-    filter:
-        drop-shadow(
-            0 9px 8px
-            rgba(50,100,130,.14)
-        );
+
+    /*
+       ВАЖНО:
+       НИКАКОЙ ТЕНИ У ОБЛАКА
+    */
+
+    filter:none !important;
+
+    box-shadow:none !important;
+
+    text-shadow:none !important;
+
+    outline:none !important;
+
+    border:none !important;
+
+
+    /*
+       УБИРАЕМ СЕРУЮ ПОДСВЕТКУ
+       ПРИ КАСАНИИ НА IPAD
+    */
+
+    -webkit-tap-highlight-color:
+        rgba(0,0,0,0) !important;
+
+    -webkit-touch-callout:
+        none;
+
+    -webkit-user-select:
+        none;
+
+    user-select:
+        none;
+
+    touch-action:
+        manipulation;
 }
 
 
 .cloud-wrapper img{
+
     display:block;
 
     width:100%;
+
     height:auto;
 
     pointer-events:none;
+
+    user-select:none;
+
+    -webkit-user-select:none;
+
+    -webkit-user-drag:none;
+
+    filter:none !important;
+
+    box-shadow:none !important;
+
+    outline:none !important;
+
+    border:none !important;
 }
 
 
 .cloud-wrapper.left{
+
     left:5%;
 }
 
 
 .cloud-wrapper.center{
+
     left:50%;
 
     transform:
@@ -695,39 +1036,101 @@ body{
 
 
 .cloud-wrapper.right{
+
     right:5%;
 }
 
 
+.cloud-wrapper:hover,
+.cloud-wrapper:focus,
+.cloud-wrapper:focus-visible,
+.cloud-wrapper:active{
+
+    outline:none !important;
+
+    border:none !important;
+
+    box-shadow:none !important;
+
+    filter:none !important;
+
+    background:
+        transparent !important;
+}
+
+
+.cloud-wrapper img:hover,
+.cloud-wrapper img:focus,
+.cloud-wrapper img:active{
+
+    outline:none !important;
+
+    border:none !important;
+
+    box-shadow:none !important;
+
+    filter:none !important;
+}
+
+
+
+/* =====================================================
+   ОБЛАКО ПАДАЕТ
+===================================================== */
+
 @keyframes cloudDown{
 
     from{
+
         top:-260px;
     }
 
     to{
+
         top:110%;
     }
 }
 
 
+
+/* =====================================================
+   НАЖАЛИ НА ОБЛАКО
+
+   ОНО ПРОСТО ИСЧЕЗАЕТ
+===================================================== */
+
 .cloud-wrapper.correct{
+
     pointer-events:none;
 
+    filter:none !important;
+
+    box-shadow:none !important;
+
+    outline:none !important;
+
     animation:
+
         cloudOut
-        .6s
-        ease
+        .12s
+        linear
         forwards;
 }
 
 
 @keyframes cloudOut{
 
+    from{
+
+        opacity:1;
+    }
+
     to{
+
         opacity:0;
     }
 }
+
 
 
 /* =====================================================
@@ -735,15 +1138,19 @@ body{
 ===================================================== */
 
 #spaceTransition{
+
     position:absolute;
+
     inset:0;
 
     z-index:7;
 
     pointer-events:none;
+
     opacity:0;
 
     background:
+
         linear-gradient(
             to bottom,
             rgba(31,91,151,0) 0%,
@@ -754,13 +1161,18 @@ body{
         );
 
     transition:
-        opacity 2.2s ease;
+
+        opacity
+        2.2s
+        ease;
 }
 
 
 #game.space-prep #spaceTransition{
+
     opacity:1;
 }
+
 
 
 /* =====================================================
@@ -768,7 +1180,9 @@ body{
 ===================================================== */
 
 #space{
+
     position:absolute;
+
     inset:0;
 
     z-index:8;
@@ -781,29 +1195,45 @@ body{
         scale(1.035);
 
     transition:
-        opacity 3.2s ease,
-        transform 6s ease;
+
+        opacity
+        3.2s
+        ease,
+
+        transform
+        6s
+        ease;
 }
 
 
 #spaceImage{
+
     position:absolute;
+
     inset:0;
 
     display:block;
 
     width:100%;
+
     height:100%;
 
-    object-fit:cover;
-    object-position:center center;
+    object-fit:
+        cover;
+
+    object-position:
+        center center;
 }
 
 
 #game.space-mode #space{
+
     opacity:1;
-    transform:scale(1);
+
+    transform:
+        scale(1);
 }
+
 
 
 /* =====================================================
@@ -811,7 +1241,9 @@ body{
 ===================================================== */
 
 #stars{
+
     position:absolute;
+
     inset:0;
 
     z-index:12;
@@ -821,27 +1253,38 @@ body{
     opacity:0;
 
     transition:
-        opacity 2.5s ease;
+        opacity
+        2.5s
+        ease;
 }
 
 
 #game.space-mode #stars{
+
     opacity:1;
 }
 
 
 .star{
+
     position:absolute;
 
-    border-radius:50%;
+    border-radius:
+        50%;
 
-    background:white;
+    background:
+        white;
 
     box-shadow:
-        0 0 5px rgba(255,255,255,.9),
-        0 0 10px rgba(160,205,255,.7);
+
+        0 0 5px
+        rgba(255,255,255,.9),
+
+        0 0 10px
+        rgba(160,205,255,.7);
 
     animation:
+
         twinkle
         1.8s
         ease-in-out
@@ -851,30 +1294,47 @@ body{
 
 
 .star.big{
+
     box-shadow:
-        0 0 6px white,
-        0 0 14px rgba(150,200,255,.9),
-        0 0 24px rgba(120,170,255,.55);
+
+        0 0 6px
+        white,
+
+        0 0 14px
+        rgba(150,200,255,.9),
+
+        0 0 24px
+        rgba(120,170,255,.55);
 }
 
 
 @keyframes twinkle{
 
     0%{
+
         opacity:.18;
-        transform:scale(.65);
+
+        transform:
+            scale(.65);
     }
 
     50%{
+
         opacity:1;
-        transform:scale(1.2);
+
+        transform:
+            scale(1.2);
     }
 
     100%{
+
         opacity:.42;
-        transform:scale(.82);
+
+        transform:
+            scale(.82);
     }
 }
+
 
 
 /* =====================================================
@@ -882,13 +1342,17 @@ body{
 ===================================================== */
 
 #finishText{
+
     position:absolute;
 
     left:50%;
+
     top:10%;
 
     transform:
+
         translate(-50%,-20px)
+
         scale(.9);
 
     z-index:60;
@@ -899,32 +1363,49 @@ body{
 
     text-align:center;
 
+    font-family:
+        "Neucha",
+        cursive;
+
     font-size:
+
         clamp(
-            30px,
-            4vw,
-            58px
+            35px,
+            4.5vw,
+            65px
         );
 
-    font-weight:900;
+    font-weight:
+        400;
 
     text-shadow:
+
         0 4px 14px
         rgba(0,0,0,.5);
 
     transition:
-        opacity .8s ease,
-        transform .8s ease;
+
+        opacity
+        .8s
+        ease,
+
+        transform
+        .8s
+        ease;
 }
 
 
 #finishText.show{
+
     opacity:1;
 
     transform:
+
         translate(-50%,0)
+
         scale(1);
 }
+
 
 
 /* =====================================================
@@ -932,13 +1413,17 @@ body{
 ===================================================== */
 
 #backButton{
+
     position:absolute;
 
     left:50%;
+
     bottom:10%;
 
     transform:
+
         translateX(-50%)
+
         translateY(20px);
 
     z-index:70;
@@ -947,24 +1432,33 @@ body{
         17px 30px;
 
     border:
+
         3px solid
         rgba(255,255,255,.9);
 
-    border-radius:30px;
+    border-radius:
+        30px;
 
     background:
         rgba(255,255,255,.92);
 
-    color:#214d78;
+    color:
+        #214d78;
+
+    font-family:
+        "Neucha",
+        cursive;
 
     font-size:
+
         clamp(
-            17px,
-            1.7vw,
-            25px
+            23px,
+            2.3vw,
+            34px
         );
 
-    font-weight:900;
+    font-weight:
+        400;
 
     cursor:pointer;
 
@@ -973,23 +1467,37 @@ body{
     pointer-events:none;
 
     box-shadow:
+
         0 8px 22px
         rgba(0,0,0,.25);
 
+    outline:none;
+
     transition:
-        opacity .7s ease,
-        transform .7s ease;
+
+        opacity
+        .7s
+        ease,
+
+        transform
+        .7s
+        ease;
 }
 
 
 #backButton.show{
+
     opacity:1;
+
     pointer-events:auto;
 
     transform:
+
         translateX(-50%)
+
         translateY(0);
 }
+
 
 
 /* =====================================================
@@ -998,63 +1506,97 @@ body{
 
 @media (max-width:700px){
 
+
     #menuTitle{
-        font-size:21px;
-        padding:12px 20px;
+
+        font-size:
+            26px;
+
+        padding:
+            12px 20px;
     }
+
 
     .modeButton{
-        min-width:230px;
-        padding:18px 20px;
-        font-size:19px;
+
+        min-width:
+            230px;
+
+        padding:
+            18px 20px;
+
+        font-size:
+            25px;
     }
 
+
     #startMode{
+
         left:5%;
+
         top:27%;
     }
 
+
     #middleMode{
+
         right:5%;
+
         top:48%;
     }
 
+
     #endMode{
+
         left:5%;
+
         top:69%;
     }
 
+
     #rocket{
+
         width:
+
             clamp(
                 130px,
                 28vw,
                 175px
             );
 
-        bottom:27.5%;
+        bottom:
+            27.5%;
     }
 
+
     .cloud-wrapper{
+
         width:
+
             clamp(
                 190px,
                 34vw,
                 260px
             );
     }
+
 }
 
 </style>
+
 </head>
+
 
 <body>
 
+
 <div id="game">
+
 
     <div id="sky"></div>
 
     <div id="transitionSky"></div>
+
 
     <div id="airport"></div>
 
@@ -1063,48 +1605,76 @@ body{
     <div id="skyTexture"></div>
 
 
-    <!-- МЕНЮ -->
+
+    <!-- =================================================
+         МЕНЮ
+    ================================================== -->
 
     <div id="menu">
 
+
         <div id="menuTitle">
+
             Выбери позицию звука Р
+
         </div>
+
 
         <button
             class="modeButton"
             id="startMode"
         >
+
             Р в начале слова
+
         </button>
+
 
         <button
             class="modeButton"
             id="middleMode"
         >
+
             Р в середине слова
+
         </button>
+
 
         <button
             class="modeButton"
             id="endMode"
         >
+
             Р в конце слова
+
         </button>
 
+
     </div>
 
+
+
+    <!-- =================================================
+         ЗАГРУЗКА
+    ================================================== -->
 
     <div id="loading">
+
         Загружаем облака...
+
     </div>
 
 
-    <!-- КОСМОС -->
+
+    <!-- =================================================
+         КОСМОС
+    ================================================== -->
 
     <div id="spaceTransition"></div>
 
+
     <div id="space">
+
 
         <img
             id="spaceImage"
@@ -1112,24 +1682,35 @@ body{
             alt=""
         >
 
+
     </div>
 
 
     <div id="stars"></div>
 
 
-    <!-- СТАРТ -->
+
+    <!-- =================================================
+         НАЖМИ НА РАКЕТУ
+    ================================================== -->
 
     <div id="startText">
+
         🚀 Нажми на ракету!
+
     </div>
 
 
-    <!-- РАКЕТА -->
+
+    <!-- =================================================
+         РАКЕТА
+    ================================================== -->
 
     <div id="rocket">
 
+
         <div id="fire">
+
 
             <img
                 id="fireImage"
@@ -1137,7 +1718,9 @@ body{
                 alt=""
             >
 
+
         </div>
+
 
         <img
             id="rocketImage"
@@ -1145,24 +1728,35 @@ body{
             alt="Ракета"
         >
 
+
     </div>
 
 
-    <!-- ФИНАЛ -->
+
+    <!-- =================================================
+         ФИНАЛ
+    ================================================== -->
 
     <div id="finishText">
+
         Мы в космосе! 🚀✨
+
     </div>
 
 
     <button id="backButton">
+
         ← Вернуться на аэродром
+
     </button>
+
 
 </div>
 
 
+
 <script>
+
 
 /* =====================================================
    GITHUB
@@ -1171,11 +1765,14 @@ body{
 const GITHUB_OWNER =
     "propodgotovkaa-creator";
 
+
 const GITHUB_REPO =
     "Raketa";
 
+
 const GITHUB_BRANCH =
     "main";
+
 
 
 /* =====================================================
@@ -1196,24 +1793,35 @@ const MODE_FOLDERS = {
 };
 
 
+
 /* =====================================================
-   ТРАЕКТОРИИ
+   ПОЛОЖЕНИЯ ОБЛАКОВ
 ===================================================== */
 
 const cloudSides = [
 
     "left",
+
     "right",
+
     "center",
+
     "left",
+
     "center",
+
     "right",
+
     "left",
+
     "right",
+
     "center",
+
     "left"
 
 ];
+
 
 
 /* =====================================================
@@ -1223,10 +1831,15 @@ const cloudSides = [
 const fireFrames = [
 
     "fire1.png",
+
     "fire2.png",
+
     "fire3.png",
+
     "fire4.png",
+
     "fire5.png",
+
     "fire6.png"
 
 ];
@@ -1237,122 +1850,202 @@ let fireFrameIndex = 0;
 let fireTimer = null;
 
 
+
 /* =====================================================
    ЭЛЕМЕНТЫ
 ===================================================== */
 
 const game =
-    document.getElementById("game");
+    document.getElementById(
+        "game"
+    );
+
 
 const menu =
-    document.getElementById("menu");
+    document.getElementById(
+        "menu"
+    );
+
 
 const loading =
-    document.getElementById("loading");
+    document.getElementById(
+        "loading"
+    );
+
 
 const startMode =
-    document.getElementById("startMode");
+    document.getElementById(
+        "startMode"
+    );
+
 
 const middleMode =
-    document.getElementById("middleMode");
+    document.getElementById(
+        "middleMode"
+    );
+
 
 const endMode =
-    document.getElementById("endMode");
+    document.getElementById(
+        "endMode"
+    );
+
 
 const rocket =
-    document.getElementById("rocket");
+    document.getElementById(
+        "rocket"
+    );
+
 
 const fireImage =
-    document.getElementById("fireImage");
+    document.getElementById(
+        "fireImage"
+    );
+
 
 const startText =
-    document.getElementById("startText");
+    document.getElementById(
+        "startText"
+    );
+
 
 const finishText =
-    document.getElementById("finishText");
+    document.getElementById(
+        "finishText"
+    );
+
 
 const backButton =
-    document.getElementById("backButton");
+    document.getElementById(
+        "backButton"
+    );
+
 
 const stars =
-    document.getElementById("stars");
+    document.getElementById(
+        "stars"
+    );
+
 
 
 /* =====================================================
    СОСТОЯНИЕ
 ===================================================== */
 
-let selectedMode = null;
+let selectedMode =
+    null;
 
-let selectedFolder = null;
 
-let roundImages = [];
+let selectedFolder =
+    null;
 
-let gameStarted = false;
 
-let currentRound = 0;
+let roundImages =
+    [];
 
-let currentCloud = null;
 
-let canClickCloud = false;
+let gameStarted =
+    false;
 
-let finishing = false;
+
+let currentRound =
+    0;
+
+
+let currentCloud =
+    null;
+
+
+let canClickCloud =
+    false;
+
+
+let finishing =
+    false;
+
 
 
 /* =====================================================
-   ПЕРЕМЕШИВАЕМ КАРТИНКИ
+   ПЕРЕМЕШИВАНИЕ
 ===================================================== */
 
 function shuffleArray(array){
 
+
     const copy =
         [...array];
 
+
     for(
+
         let i =
             copy.length - 1;
 
         i > 0;
 
         i--
+
     ){
 
+
         const j =
+
             Math.floor(
+
                 Math.random() *
+
                 (i + 1)
+
             );
 
+
         [
+
             copy[i],
+
             copy[j]
-        ] =
-        [
+
+        ] = [
+
             copy[j],
+
             copy[i]
+
         ];
+
     }
+
 
     return copy;
 }
 
 
+
 /* =====================================================
-   ПОЛУЧАЕМ КАРТИНКИ ИЗ GITHUB
+   ЗАГРУЗКА КАРТИНОК
 ===================================================== */
 
 async function loadImagesFromFolder(folder){
 
+
     const apiURL =
+
         `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${folder}?ref=${GITHUB_BRANCH}`;
 
 
     const response =
+
         await fetch(
+
             apiURL,
+
             {
-                cache:"no-store"
+
+                cache:
+                    "no-store"
+
             }
+
         );
 
 
@@ -1360,34 +2053,57 @@ async function loadImagesFromFolder(folder){
         !response.ok
     ){
 
+
         throw new Error(
+
             "Не удалось открыть папку " +
+
             folder
+
         );
+
     }
 
 
     const files =
+
         await response.json();
 
 
     const images =
+
         files
 
-        .filter(
-            file =>
-                file.type === "file"
-        )
 
         .filter(
+
             file =>
-                /\.(png|jpg|jpeg|webp)$/i
-                .test(file.name)
+
+                file.type ===
+                "file"
+
         )
+
+
+        .filter(
+
+            file =>
+
+                /\.(png|jpg|jpeg|webp)$/i
+
+                .test(
+                    file.name
+                )
+
+        )
+
 
         .map(
+
             file =>
+
                 file.download_url
+
         );
 
 
@@ -1397,24 +2113,35 @@ async function loadImagesFromFolder(folder){
 }
 
 
+
 /* =====================================================
    ЗВЁЗДЫ
 ===================================================== */
 
 function createStars(){
 
-    stars.innerHTML = "";
 
-    const amount = 50;
+    stars.innerHTML =
+        "";
+
+
+    const amount =
+        50;
 
 
     for(
+
         let i = 0;
+
         i < amount;
+
         i++
+
     ){
 
+
         const star =
+
             document.createElement(
                 "div"
             );
@@ -1425,51 +2152,86 @@ function createStars(){
 
 
         if(
-            Math.random() > .82
+            Math.random() >
+            .82
         ){
+
 
             star.classList.add(
                 "big"
             );
+
         }
 
 
         const size =
-            Math.random() * 3 + 1.3;
+
+            Math.random() *
+            3 +
+            1.3;
 
 
         star.style.width =
-            size + "px";
+            size +
+            "px";
+
 
         star.style.height =
-            size + "px";
+            size +
+            "px";
+
 
         star.style.left =
-            Math.random() * 100 + "%";
+
+            Math.random() *
+            100 +
+            "%";
+
 
         star.style.top =
-            Math.random() * 100 + "%";
+
+            Math.random() *
+            100 +
+            "%";
+
 
         star.style.animationDuration =
+
             (
-                Math.random() * 2.4 +
+
+                Math.random() *
+                2.4 +
+
                 1.1
-            ) + "s";
+
+            ) +
+
+            "s";
+
 
         star.style.animationDelay =
+
             (
-                Math.random() * 2.5
-            ) + "s";
+
+                Math.random() *
+                2.5
+
+            ) +
+
+            "s";
 
 
         stars.appendChild(
             star
         );
+
     }
+
 }
 
 
 createStars();
+
 
 
 /* =====================================================
@@ -1477,29 +2239,44 @@ createStars();
 ===================================================== */
 
 startMode.addEventListener(
+
     "click",
-    () => selectMode("start")
+
+    () =>
+        selectMode(
+            "start"
+        )
+
 );
 
 
 middleMode.addEventListener(
+
     "click",
-    () => selectMode("middle")
+
+    () =>
+        selectMode(
+            "middle"
+        )
+
 );
 
 
 endMode.addEventListener(
+
     "click",
-    () => selectMode("end")
+
+    () =>
+        selectMode(
+            "end"
+        )
+
 );
+
 
 
 async function selectMode(mode){
 
-    /*
-       Чтобы нельзя было
-       нажать несколько кнопок.
-    */
 
     menu.style.pointerEvents =
         "none";
@@ -1510,6 +2287,7 @@ async function selectMode(mode){
 
 
     selectedFolder =
+
         MODE_FOLDERS[
             mode
         ];
@@ -1523,38 +2301,32 @@ async function selectMode(mode){
     try{
 
 
-        /*
-           Получаем реальные
-           PNG прямо из папки.
-        */
-
         roundImages =
+
             await loadImagesFromFolder(
+
                 selectedFolder
+
             );
 
-
-        /*
-           Проверка.
-        */
 
         if(
-            roundImages.length === 0
+            roundImages.length ===
+            0
         ){
 
+
             throw new Error(
+
                 "В папке нет картинок."
+
             );
+
         }
 
 
-        /*
-           Если вдруг картинок
-           больше десяти,
-           используем первые 10.
-        */
-
         roundImages =
+
             roundImages.slice(
                 0,
                 10
@@ -1572,6 +2344,7 @@ async function selectMode(mode){
 
 
         setTimeout(
+
             () => {
 
 
@@ -1591,11 +2364,14 @@ async function selectMode(mode){
 
 
             },
+
             450
+
         );
 
 
     }
+
     catch(error){
 
 
@@ -1605,10 +2381,12 @@ async function selectMode(mode){
 
 
         loading.textContent =
+
             "Не удалось загрузить облака";
 
 
         setTimeout(
+
             () => {
 
 
@@ -1618,6 +2396,7 @@ async function selectMode(mode){
 
 
                 loading.textContent =
+
                     "Загружаем облака...";
 
 
@@ -1626,10 +2405,15 @@ async function selectMode(mode){
 
 
             },
+
             2000
+
         );
+
     }
+
 }
+
 
 
 /* =====================================================
@@ -1638,10 +2422,13 @@ async function selectMode(mode){
 
 function startFireAnimation(){
 
+
     if(
         fireTimer
     ){
+
         return;
+
     }
 
 
@@ -1650,7 +2437,8 @@ function startFireAnimation(){
     );
 
 
-    fireFrameIndex = 0;
+    fireFrameIndex =
+        0;
 
 
     fireImage.src =
@@ -1658,7 +2446,9 @@ function startFireAnimation(){
 
 
     fireTimer =
+
         setInterval(
+
             () => {
 
 
@@ -1666,24 +2456,35 @@ function startFireAnimation(){
 
 
                 if(
+
                     fireFrameIndex >=
+
                     fireFrames.length
+
                 ){
 
-                    fireFrameIndex = 0;
+
+                    fireFrameIndex =
+                        0;
+
                 }
 
 
                 fireImage.src =
+
                     fireFrames[
                         fireFrameIndex
                     ];
 
 
             },
+
             95
+
         );
+
 }
+
 
 
 /* =====================================================
@@ -1691,18 +2492,28 @@ function startFireAnimation(){
 ===================================================== */
 
 rocket.addEventListener(
+
     "click",
+
     startGame
+
 );
 
 
 function startGame(){
 
+
     if(
+
         gameStarted ||
-        roundImages.length === 0
+
+        roundImages.length ===
+        0
+
     ){
+
         return;
+
     }
 
 
@@ -1724,6 +2535,7 @@ function startGame(){
 
 
     setTimeout(
+
         () => {
 
 
@@ -1737,11 +2549,14 @@ function startGame(){
 
 
         },
+
         500
+
     );
 
 
     setTimeout(
+
         () => {
 
 
@@ -1753,25 +2568,36 @@ function startGame(){
 
 
         },
+
         3500
+
     );
+
 }
 
 
+
 /* =====================================================
-   СОЗДАЁМ ОБЛАКО
+   СОЗДАНИЕ ОБЛАКА
 ===================================================== */
 
 function createRound(){
 
+
     if(
+
         currentRound >=
+
         roundImages.length
+
     ){
+
 
         startSpaceSequence();
 
+
         return;
+
     }
 
 
@@ -1780,43 +2606,67 @@ function createRound(){
 
 
     const side =
+
         cloudSides[
+
             currentRound %
+
             cloudSides.length
+
         ];
 
 
     const wrapper =
+
         document.createElement(
             "div"
         );
 
 
     wrapper.className =
+
         `cloud-wrapper ${side}`;
 
 
+    /*
+       Не даём Safari
+       фокусировать облако
+    */
+
+    wrapper.setAttribute(
+
+        "tabindex",
+
+        "-1"
+
+    );
+
+
     const image =
+
         document.createElement(
             "img"
         );
 
 
-    /*
-       Вот здесь используется
-       настоящий файл с GitHub,
-       каким бы длинным ни было
-       его название.
-    */
-
     image.src =
+
         roundImages[
             currentRound
         ];
 
 
     image.alt =
-        `Раунд ${currentRound + 1}`;
+        "";
+
+
+    image.setAttribute(
+
+        "draggable",
+
+        "false"
+
+    );
 
 
     wrapper.appendChild(
@@ -1833,31 +2683,63 @@ function createRound(){
         wrapper;
 
 
+
+    /*
+       Используем POINTERDOWN.
+
+       Облако реагирует сразу
+       в момент касания,
+       а не после системного click.
+    */
+
     wrapper.addEventListener(
-        "click",
-        () => {
+
+        "pointerdown",
+
+        event => {
+
+
+            event.preventDefault();
+
 
             chooseCloud(
+
                 wrapper,
+
                 side
+
             );
 
+        },
+
+        {
+            passive:false
         }
+
     );
 
 
+
     wrapper.addEventListener(
+
         "animationend",
+
         () => {
 
 
             if(
-                wrapper === currentCloud
+
+                wrapper ===
+                currentCloud
+
                 &&
+
                 !wrapper.classList.contains(
                     "correct"
                 )
+
             ){
+
 
                 wrapper.remove();
 
@@ -1866,21 +2748,22 @@ function createRound(){
                     null;
 
 
-                /*
-                   Если ребёнок
-                   не нажал —
-                   тот же раунд
-                   появляется снова.
-                */
-
                 setTimeout(
+
                     createRound,
+
                     350
+
                 );
+
             }
+
         }
+
     );
+
 }
+
 
 
 /* =====================================================
@@ -1892,11 +2775,17 @@ function chooseCloud(
     side
 ){
 
+
     if(
+
         !canClickCloud ||
+
         finishing
+
     ){
+
         return;
+
     }
 
 
@@ -1904,21 +2793,67 @@ function chooseCloud(
         false;
 
 
+
+    /*
+       Сразу убираем
+       любые системные эффекты
+    */
+
+    cloud.style.outline =
+        "none";
+
+
+    cloud.style.boxShadow =
+        "none";
+
+
+    cloud.style.filter =
+        "none";
+
+
+    cloud.style.background =
+        "transparent";
+
+
+
+    /*
+       Облако исчезает
+    */
+
     cloud.classList.add(
         "correct"
     );
 
+
+
+    /*
+       Ракета летит
+       в его сторону
+    */
 
     moveRocketTo(
         side
     );
 
 
+
+    /*
+       Полностью удаляем
+       облако из страницы
+    */
+
     setTimeout(
+
         () => {
 
 
-            cloud.remove();
+            if(
+                cloud
+            ){
+
+                cloud.remove();
+
+            }
 
 
             currentCloud =
@@ -1926,78 +2861,108 @@ function chooseCloud(
 
 
         },
-        600
+
+        130
+
     );
 
 
     currentRound++;
 
 
+
+    /*
+       Следующее облако
+    */
+
     setTimeout(
+
         createRound,
+
         1200
+
     );
+
 }
 
 
+
 /* =====================================================
-   ТРАЕКТОРИЯ РАКЕТЫ
+   ДВИЖЕНИЕ РАКЕТЫ
 ===================================================== */
 
 function moveRocketTo(side){
 
 
     if(
-        side === "left"
+        side ===
+        "left"
     ){
+
 
         rocket.style.left =
             "24%";
 
 
         rocket.style.transform =
+
             "translateX(-50%) rotate(-7deg)";
+
     }
 
 
     if(
-        side === "center"
+        side ===
+        "center"
     ){
+
 
         rocket.style.left =
             "50%";
 
 
         rocket.style.transform =
+
             "translateX(-50%) rotate(0deg)";
+
     }
 
 
     if(
-        side === "right"
+        side ===
+        "right"
     ){
+
 
         rocket.style.left =
             "76%";
 
 
         rocket.style.transform =
+
             "translateX(-50%) rotate(7deg)";
+
     }
 
 
     setTimeout(
+
         () => {
 
 
             rocket.style.transform =
+
                 "translateX(-50%) rotate(0deg)";
 
 
         },
+
         850
+
     );
+
 }
+
 
 
 /* =====================================================
@@ -2006,10 +2971,13 @@ function moveRocketTo(side){
 
 function startSpaceSequence(){
 
+
     if(
         finishing
     ){
+
         return;
+
     }
 
 
@@ -2022,6 +2990,7 @@ function startSpaceSequence(){
 
 
     rocket.style.transform =
+
         "translateX(-50%) rotate(0deg)";
 
 
@@ -2035,6 +3004,7 @@ function startSpaceSequence(){
 
 
     setTimeout(
+
         () => {
 
 
@@ -2044,11 +3014,14 @@ function startSpaceSequence(){
 
 
         },
+
         1100
+
     );
 
 
     setTimeout(
+
         () => {
 
 
@@ -2057,11 +3030,14 @@ function startSpaceSequence(){
 
 
         },
+
         2700
+
     );
 
 
     setTimeout(
+
         () => {
 
 
@@ -2071,17 +3047,23 @@ function startSpaceSequence(){
 
 
         },
+
         4200
+
     );
 
 
     setTimeout(
+
         () => {
 
 
             rocket.style.transition =
+
                 "bottom 3.6s ease-in, " +
+
                 "left 1.2s ease, " +
+
                 "transform .7s ease";
 
 
@@ -2090,11 +3072,14 @@ function startSpaceSequence(){
 
 
         },
+
         5900
+
     );
 
 
     setTimeout(
+
         () => {
 
 
@@ -2104,18 +3089,25 @@ function startSpaceSequence(){
 
 
         },
+
         7600
+
     );
+
 }
 
 
+
 /* =====================================================
-   ВОЗВРАТ НА АЭРОДРОМ
+   ВЕРНУТЬСЯ НА АЭРОДРОМ
 ===================================================== */
 
 backButton.addEventListener(
+
     "click",
+
     resetGame
+
 );
 
 
@@ -2123,18 +3115,24 @@ function resetGame(){
 
 
     document
+
         .querySelectorAll(
             ".cloud-wrapper"
         )
+
         .forEach(
+
             cloud =>
+
                 cloud.remove()
+
         );
 
 
     if(
         fireTimer
     ){
+
 
         clearInterval(
             fireTimer
@@ -2143,6 +3141,7 @@ function resetGame(){
 
         fireTimer =
             null;
+
     }
 
 
@@ -2179,10 +3178,15 @@ function resetGame(){
 
 
     game.classList.remove(
+
         "engine-on",
+
         "flying",
+
         "space-prep",
+
         "space-mode"
+
     );
 
 
@@ -2196,9 +3200,13 @@ function resetGame(){
 
 
     rocket.style.transition =
+
         "opacity .55s ease, " +
+
         "left 1.15s cubic-bezier(.22,.75,.3,1), " +
+
         "bottom 2.8s cubic-bezier(.22,.75,.3,1), " +
+
         "transform .55s ease";
 
 
@@ -2211,6 +3219,7 @@ function resetGame(){
 
 
     rocket.style.transform =
+
         "translateX(-50%) rotate(0deg)";
 
 
@@ -2239,6 +3248,7 @@ function resetGame(){
 
 
     setTimeout(
+
         () => {
 
 
@@ -2248,11 +3258,17 @@ function resetGame(){
 
 
         },
+
         400
+
     );
+
 }
+
 
 </script>
 
+
 </body>
+
 </html>
